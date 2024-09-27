@@ -36,5 +36,7 @@ public class ReusableEffectsManager : MonoBehaviour
         
         var floatTextController = ObjectPoolManager.Instance.Spawn<FloatingTextController>(message.MergePosition, Quaternion.identity);
         floatTextController.SetText(message.Point.ToString());
+        
+        SoundEffectManager.Instance.PlaySound("MergedObject", message.MergePosition);
     }
 }
