@@ -47,6 +47,12 @@ TagManager:
   - name: Item
     uniqueID: 1263568279
     locked: 0
+  - name: VFX
+    uniqueID: 2504005663
+    locked: 0
+  - name: Floating Text
+    uniqueID: 1768977735
+    locked: 0
   - name: Hand
     uniqueID: 4166866577
     locked: 0

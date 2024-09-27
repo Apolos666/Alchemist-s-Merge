@@ -46,6 +46,7 @@ public class PropBehavior : MonoBehaviour
             yield return null;
         }
         
+        EventBus.Publish(new ObjectMergingEvent(midPoint, _nextLevel.Prefab.transform.localScale, _prop.Point));
         SpawnNextLevelProp(midPoint);
         
         Destroy(otherProp);
