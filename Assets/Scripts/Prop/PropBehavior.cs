@@ -57,7 +57,7 @@ public class PropBehavior : MonoBehaviour
     {
         if (_nextLevel is null) return;
         
-        GameObject newProp = Instantiate(_nextLevel.Prefab, spawnPosition, Quaternion.identity);
+        var newProp = Instantiate(_nextLevel.Prefab, spawnPosition, Quaternion.identity);
         
         // Thêm một lực nhỏ theo hướng ngẫu nhiên để tạo hiệu ứng "bật" ra
         var rb = newProp.GetComponent<Rigidbody2D>();

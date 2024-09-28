@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4849628852575528757}
   - component: {fileID: 4849628852575528758}
   - component: {fileID: -2154390955817997740}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: Cursed Pumkin
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -35,8 +35,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - Hand Barrier
+  - Item
   m_SortingLayers:
   - name: Default
     uniqueID: 0

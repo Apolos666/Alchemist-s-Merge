@@ -9,16 +9,7 @@ public class PropSelector : GenericSingleton<PropSelector>
     private readonly Queue<Prop> _propQueue = new Queue<Prop>();
     private const int QueueSize = 2;
 
-    public Prop CurrentProp
-    {
-        get
-        {
-            if (_propQueue != null && _propQueue.Count > 0)
-                _propQueue.Peek();
-            
-            return null;
-        }
-    }
+    public Prop CurrentProp => _propQueue.Count > 0 ? _propQueue.Peek() : null;
 
     private void Start()
     {
@@ -36,25 +27,19 @@ public class PropSelector : GenericSingleton<PropSelector>
     private void AddNewPropToQueue()
     {
         var randomProp = _props[Random.Range(0, _props.Length)];
+        EventBus.Publish(new AddNewPropToQueue(randomProp));
         _propQueue.Enqueue(randomProp);
     }
 
-    public GameObject GetNextProp(Vector3 spawnPoint)
+    public (GameObject, Prop) GetNextProp(Vector3 spawnPoint)
     {
         var prop = _propQueue.Dequeue();
         var newProp = Instantiate(prop.Prefab, spawnPoint, Quaternion.identity);
-        newProp.GetComponent<Rigidbody2D>().gravityScale = 0;
+        
+        if (_propQueue.Count > 0)
+            EventBus.Publish(new NextPropReadyEvent(_propQueue.Peek()));
+        
         AddNewPropToQueue();
-        return newProp;
-    }
-}
-
-public class ScoreChangedEvent : IEvent
-{
-    public int Score { get; }
-
-    public ScoreChangedEvent(int score)
-    {
-        Score = score;
+        return (newProp, prop);
     }
 }

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1125101808027167932}
   - component: {fileID: 1125101808027167935}
   - component: {fileID: -5764683928748806706}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: Death Mushroom
   m_TagString: Untagged
   m_Icon: {fileID: 0}

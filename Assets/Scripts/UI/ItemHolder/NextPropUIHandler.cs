@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class NextPropUIHandler : MonoBehaviour
@@ -7,18 +8,16 @@ public class NextPropUIHandler : MonoBehaviour
 
     private void Start()
     {
-        UpdatePropUI();
+        EventBus.Subscribe<NextPropReadyEvent>(UpdatePropUI);
     }
 
-    private void Update()
+    private void OnDestroy()
     {
-        UpdatePropUI();
+        EventBus.Unsubscribe<NextPropReadyEvent>(UpdatePropUI);
     }
 
-    private void UpdatePropUI()
+    private void UpdatePropUI(NextPropReadyEvent message)
     {
-        if (PropSelector.Instance.CurrentProp is null) return;
-        
-        _propImage.sprite = PropSelector.Instance.CurrentProp.Icon;
+        _propImage.sprite = message.Prop.Icon;
     }
 }

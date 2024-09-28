@@ -72,18 +72,19 @@ public class SettingsPanelManager : MonoBehaviour
     private void ShowSettings()
     {
         _isVisible = true;
+        _settingsButton.GetComponent<Button>().enabled = false;
         AnimatePanel(shownPosition, showEase);
     }
 
     private void HideSettings()
     {
         _isVisible = false;
+        _settingsButton.GetComponent<Button>().enabled = true;
         AnimatePanel(hiddenPosition, hideEase);
     }
 
     private void AnimatePanel(Vector2 targetPosition, Ease easeType)
     {
-        // Kill any ongoing tweens to prevent conflicts
         _settingsPanel.DOKill();
 
         // Animate the panel's position
@@ -98,6 +99,7 @@ public class SettingsPanelManager : MonoBehaviour
 
         // Add a fade effect
         var canvasGroup = _settingsPanel.GetComponent<CanvasGroup>();
+        
         if (canvasGroup == null)
             canvasGroup = _settingsPanel.gameObject.AddComponent<CanvasGroup>();
 
@@ -123,10 +125,8 @@ public class SettingsPanelManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        // Clean up listener to prevent memory leaks
         _settingsButton.onClick.RemoveListener(ToggleSettings);
-
-        // Kill all tweens associated with the settings panel
+        
         _settingsPanel.DOKill();
         _settingsButton.transform.DOKill();
     }

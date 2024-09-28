@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1323517217559780123}
   - component: {fileID: 1323517217559780120}
   - component: {fileID: -1028191883245300718}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: Emerald Lotus
   m_TagString: Untagged
   m_Icon: {fileID: 0}

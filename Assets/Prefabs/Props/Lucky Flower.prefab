@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6615600328935093546}
   - component: {fileID: 6615600328935093545}
   - component: {fileID: -7543441855547853971}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: Lucky Flower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
