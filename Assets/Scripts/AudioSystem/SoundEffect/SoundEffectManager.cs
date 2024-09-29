@@ -38,7 +38,6 @@ public class SoundEffectManager : GenericSingleton<SoundEffectManager>
             var source = GetAvailableAudioSource();
             if (source != null)
             {
-                source.volume = effect.volume;
                 source.pitch = effect.basePitch + Random.Range(0.1f, effect.pitchVariance);
                 source.transform.position = position;
                 source.PlayOneShot(effect.clips[Random.Range(0, effect.clips.Length)]);
@@ -53,5 +52,13 @@ public class SoundEffectManager : GenericSingleton<SoundEffectManager>
     private AudioSource GetAvailableAudioSource()
     {
         return _audioSources.FirstOrDefault(audioSource => !audioSource.isPlaying);
+    }
+    
+    public void SetVolume(float volume)
+    {
+        foreach (var source in _audioSources)
+        {
+            source.volume = volume;
+        }
     }
 }

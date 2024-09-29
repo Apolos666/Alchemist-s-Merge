@@ -30,13 +30,11 @@ public class SoundEffectManagerEditor : Editor
             var soundEffect = _soundEffects.GetArrayElementAtIndex(i);
             var name = soundEffect.FindPropertyRelative("name");
             var clips = soundEffect.FindPropertyRelative("clips");
-            var volume = soundEffect.FindPropertyRelative("volume");
             var pitchVariance = soundEffect.FindPropertyRelative("pitchVariance");
             var basePitch = soundEffect.FindPropertyRelative("basePitch");
             
             EditorGUILayout.PropertyField(name);
             EditorGUILayout.PropertyField(clips, true);
-            EditorGUILayout.Slider(volume, 0f ,1f, "Volume");
             EditorGUILayout.Slider(pitchVariance, 0f, 2f, "Pitch Variance");
             EditorGUILayout.Slider(basePitch, 0f, 1f, "Base Pitch");
             
