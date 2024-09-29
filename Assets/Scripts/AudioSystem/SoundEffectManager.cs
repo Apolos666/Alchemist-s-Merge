@@ -35,14 +35,13 @@ public class SoundEffectManager : GenericSingleton<SoundEffectManager>
     {
         if (_soundEffectDictionary.TryGetValue(soundName, out var effect))
         {
-            var source = GetAvaialbleAudioSource();
+            var source = GetAvailableAudioSource();
             if (source != null)
             {
-                source.clip = effect.clips[Random.Range(0, effect.clips.Length)];
                 source.volume = effect.volume;
-                source.pitch = 1.0f + Random.Range(-effect.pitchVariance, effect.pitchVariance);
+                source.pitch = effect.basePitch + Random.Range(0.1f, effect.pitchVariance);
                 source.transform.position = position;
-                source.Play();
+                source.PlayOneShot(effect.clips[Random.Range(0, effect.clips.Length)]);
             }
             else
             {
@@ -51,7 +50,7 @@ public class SoundEffectManager : GenericSingleton<SoundEffectManager>
         }
     }
 
-    private AudioSource GetAvaialbleAudioSource()
+    private AudioSource GetAvailableAudioSource()
     {
         return _audioSources.FirstOrDefault(audioSource => !audioSource.isPlaying);
     }

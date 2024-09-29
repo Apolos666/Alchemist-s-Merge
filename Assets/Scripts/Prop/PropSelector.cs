@@ -1,11 +1,17 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class PropSelector : GenericSingleton<PropSelector>
 {
     [SerializeField] private Prop[] _props;
-
+    [SerializeField] private float[] _baseSpawnWeights;
+    [SerializeField] private int _initialUnlockedProps = 1;
+    [SerializeField] private int[] _unlockThresholds;
+    [SerializeField] private float _newPropWeightMultiplier  = 0.5f;
+    
+    private UnlockSystem _unlockSystem;
     private readonly Queue<Prop> _propQueue = new Queue<Prop>();
     private const int QueueSize = 2;
 
@@ -13,7 +19,34 @@ public class PropSelector : GenericSingleton<PropSelector>
 
     private void Start()
     {
+        _unlockSystem = new UnlockSystem(_unlockThresholds, _initialUnlockedProps, GetPropIconByIndex);
         InitializePropQueue();
+    }
+
+    private Sprite GetPropIconByIndex(int index)
+    {
+        if (index >= 0 && index < _props.Length)
+        {
+            return _props[index].Icon;
+        }
+
+        return null;
+    }
+
+    private void OnEnable()
+    {
+        EventBus.Subscribe<ScoreUpdateEvent>(OnScoreUpdate);
+    }
+
+    private void OnDisable()
+    {
+        EventBus.Unsubscribe<ScoreUpdateEvent>(OnScoreUpdate);
+    }
+    
+    private void OnScoreUpdate(ScoreUpdateEvent message)
+    {
+        // Khi điểm số thay đổi, cộng thêm điểm để cập nhật cấp độ mở khóa
+        _unlockSystem.AddPoints(message.Score);
     }
 
     private void InitializePropQueue()
@@ -26,9 +59,60 @@ public class PropSelector : GenericSingleton<PropSelector>
 
     private void AddNewPropToQueue()
     {
-        var randomProp = _props[Random.Range(0, _props.Length)];
+        var randomProp = GetRandomProp();
         EventBus.Publish(new AddNewPropToQueue(randomProp));
         _propQueue.Enqueue(randomProp);
+    }
+
+    private Prop GetRandomProp()
+    {
+        // Bước 1: Lấy danh sách props đã mở khóa
+        // Chỉ xem xét các props từ index 0 đến CurrentUnlockLevel - 1
+        var unlockedProps = _props.Take(_unlockSystem.CurrentUnlockLevel).ToList();
+        var unlockedWeights = _baseSpawnWeights.Take(_unlockSystem.CurrentUnlockLevel).ToList();
+
+        // Bước 2: Điều chỉnh trọng số cho các props mới mở khóa
+        for (var i = 0; i < unlockedWeights.Count; i++)
+        {
+            // Tính số cấp độ đã qua kể từ khi prop này được mở khóa
+            // Prop mới nhất sẽ có levelsFromUnlock = 0, prop cũ nhất sẽ có giá trị cao nhất
+            var levelsFromUnlock = _unlockSystem.CurrentUnlockLevel - i - 1;
+        
+            if (levelsFromUnlock >= 0)
+            {
+                // Giảm trọng số cho props mới mở khóa
+                // Công thức: newWeight = baseWeight * (1 / newPropWeightMultiplier)^levelsFromUnlock
+                // Ví dụ: nếu newPropWeightMultiplier = 0.5
+                // - Prop mới nhất (levelsFromUnlock = 0): không thay đổi
+                // - Prop cũ hơn 1 cấp (levelsFromUnlock = 1): trọng số tăng gấp 2 lần
+                // - Prop cũ hơn 2 cấp (levelsFromUnlock = 2): trọng số tăng gấp 4 lần, v.v.
+                unlockedWeights[i] *= Mathf.Pow(1 / _newPropWeightMultiplier, levelsFromUnlock);
+            }
+        }
+
+        // Bước 3: Chọn prop ngẫu nhiên dựa trên trọng số đã điều chỉnh
+        // Tính tổng trọng số của các props đã mở khóa
+        var totalWeight = unlockedWeights.Sum();
+        var randomValue = Random.Range(0f, totalWeight);
+
+        // Duyệt qua danh sách props đã mở khóa
+        for (var i = 0; i < unlockedProps.Count; i++)
+        {
+            // Kiểm tra xem giá trị ngẫu nhiên có nằm trong khoảng trọng số của prop hiện tại không
+            // Nếu randomValue nhỏ hơn hoặc bằng trọng số của prop hiện tại,
+            // thì chọn và trả về prop đó
+            if (randomValue <= unlockedWeights[i])
+            {
+                return unlockedProps[i];
+            }
+            // Nếu randomValue lớn hơn trọng số của prop hiện tại,
+            // trừ trọng số của prop hiện tại khỏi randomValue
+            // để kiểm tra prop tiếp theo
+            randomValue -= unlockedWeights[i];
+        }
+
+        // Trường hợp hiếm khi xảy ra lỗi: nếu không prop nào được chọn (có thể do tính toán sai),
+        return unlockedProps[0];
     }
 
     public (GameObject, Prop) GetNextProp(Vector3 spawnPoint)

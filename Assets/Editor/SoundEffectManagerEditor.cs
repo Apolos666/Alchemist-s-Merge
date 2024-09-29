@@ -32,11 +32,13 @@ public class SoundEffectManagerEditor : Editor
             var clips = soundEffect.FindPropertyRelative("clips");
             var volume = soundEffect.FindPropertyRelative("volume");
             var pitchVariance = soundEffect.FindPropertyRelative("pitchVariance");
+            var basePitch = soundEffect.FindPropertyRelative("basePitch");
             
             EditorGUILayout.PropertyField(name);
             EditorGUILayout.PropertyField(clips, true);
             EditorGUILayout.Slider(volume, 0f ,1f, "Volume");
-            EditorGUILayout.Slider(pitchVariance, 0f, 3f, "Pitch Variance");
+            EditorGUILayout.Slider(pitchVariance, 0f, 2f, "Pitch Variance");
+            EditorGUILayout.Slider(basePitch, 0f, 1f, "Base Pitch");
             
             if (GUILayout.Button("Remove Sound Effect"))
             {
