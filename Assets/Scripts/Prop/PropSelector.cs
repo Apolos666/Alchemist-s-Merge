@@ -5,11 +5,16 @@ using Random = UnityEngine.Random;
 
 public class PropSelector : GenericSingleton<PropSelector>
 {
-    [SerializeField] private Prop[] _props;
-    [SerializeField] private float[] _baseSpawnWeights;
-    [SerializeField] private int _initialUnlockedProps = 1;
-    [SerializeField] private int[] _unlockThresholds;
-    [SerializeField] private float _newPropWeightMultiplier  = 0.5f;
+    [SerializeField, Tooltip("Array of all possible props that can be selected.")]
+    private Prop[] _props;
+    [SerializeField, Tooltip("Base spawn weights for each prop, determining their initial spawn probability.")]
+    private float[] _baseSpawnWeights;
+    [SerializeField, Tooltip("Initial number of props that are unlocked at the start.")]
+    private int _initialUnlockedProps = 1;
+    [SerializeField, Tooltip("Array of point thresholds required to unlock each subsequent prop.")]
+    private int[] _unlockThresholds;
+    [SerializeField, Tooltip("Multiplier used to adjust the spawn weight of newly unlocked props.")]
+    private float _newPropWeightMultiplier = 0.5f;
     
     private UnlockSystem _unlockSystem;
     private readonly Queue<Prop> _propQueue = new Queue<Prop>();

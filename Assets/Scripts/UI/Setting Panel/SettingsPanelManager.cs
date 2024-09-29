@@ -10,6 +10,7 @@ public class SettingsPanelManager : MonoBehaviour
 {
     [SerializeField] private RectTransform _settingsPanel;
     [SerializeField] private Button _settingsButton;
+    [SerializeField] private Image _overlay;
 
     [Header("Animation Settings")] [SerializeField]
     private float _animationDuration = 0.5f;
@@ -74,6 +75,7 @@ public class SettingsPanelManager : MonoBehaviour
         _isVisible = true;
         _settingsButton.GetComponent<Button>().enabled = false;
         AnimatePanel(shownPosition, showEase);
+        AnimateOverlay(true);
     }
 
     private void HideSettings()
@@ -81,6 +83,25 @@ public class SettingsPanelManager : MonoBehaviour
         _isVisible = false;
         _settingsButton.GetComponent<Button>().enabled = true;
         AnimatePanel(hiddenPosition, hideEase);
+        AnimateOverlay(false);
+    }
+    
+    private void AnimateOverlay(bool show)
+    {
+        _overlay.DOKill();
+        
+        _overlay.gameObject.SetActive(true);
+        
+        var targetColor = show ? Color.black : Color.clear;
+        var targetAlpha = show ? 0.18f : 0;
+        
+        _overlay.DOColor(new Color(targetColor.r, targetColor.g, targetColor.b, targetAlpha), _animationDuration)
+            .SetEase(show ? showEase : hideEase)
+            .OnComplete(() =>
+            {
+                if (!show)
+                    _overlay.gameObject.SetActive(false);
+            });
     }
 
     private void AnimatePanel(Vector2 targetPosition, Ease easeType)
