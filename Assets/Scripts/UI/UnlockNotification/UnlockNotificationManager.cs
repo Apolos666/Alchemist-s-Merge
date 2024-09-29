@@ -53,6 +53,7 @@ public class UnlockNotificationManager : MonoBehaviour
     private void OnPropUnlocked(PropUnlockedEvent message)
     {
         ShowNotification(message.UnlockedPropIcon);
+        SoundEffectManager.Instance.PlaySound("Unlock", Vector3.zero);
     }
 
     private void ShowNotification(Sprite icon)
@@ -62,6 +63,7 @@ public class UnlockNotificationManager : MonoBehaviour
         _isVisible = true;
         AnimatePanel(_shownPosition, _showEase, _showDuration);
         AnimateOverlay(true);
+        UIManager.Instance.RegisterOverlay(true);
     }
 
     private void AnimateOverlay(bool show)
@@ -87,6 +89,7 @@ public class UnlockNotificationManager : MonoBehaviour
         _isVisible = false;
         AnimatePanel(_hiddenPosition, hideEase, _hideDuration);
         AnimateOverlay(false);
+        UIManager.Instance.RegisterOverlay(false);
     }
 
     private void AnimatePanel(Vector2 targetPosition, Ease easeType, float duration)

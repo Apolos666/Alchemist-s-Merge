@@ -76,6 +76,7 @@ public class SettingsPanelManager : MonoBehaviour
         _settingsButton.GetComponent<Button>().enabled = false;
         AnimatePanel(shownPosition, showEase);
         AnimateOverlay(true);
+        UIManager.Instance.RegisterOverlay(true);
     }
 
     private void HideSettings()
@@ -84,6 +85,7 @@ public class SettingsPanelManager : MonoBehaviour
         _settingsButton.GetComponent<Button>().enabled = true;
         AnimatePanel(hiddenPosition, hideEase);
         AnimateOverlay(false);
+        UIManager.Instance.RegisterOverlay(false);
     }
     
     private void AnimateOverlay(bool show)

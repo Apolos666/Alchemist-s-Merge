@@ -15,15 +15,29 @@ public class HandMovementManager : MonoBehaviour
     [SerializeField] private LayerMask _movementLayer; 
     [SerializeField] private float _scaleDuration = 0.5f;
     
+    private bool _isInteractionAllowed = true;
+    
     private void Start()
     {
         _mainCamera = Camera.main; 
         PickUpProp(); 
+        
+        EventBus.Subscribe<UIStateChangedEvent>(OnUIStateChanged);
+    }
+    
+    private void OnDestroy()
+    {
+        EventBus.Unsubscribe<UIStateChangedEvent>(OnUIStateChanged);
+    }
+
+    private void OnUIStateChanged(UIStateChangedEvent message)
+    {
+        _isInteractionAllowed = !message.IsOverlayActive;
     }
 
     private void Update()
     {
-        if (Input.touchCount <= 0) return;
+        if (!_isInteractionAllowed || Input.touchCount <= 0) return;
 
         var touch = Input.GetTouch(0);
         
