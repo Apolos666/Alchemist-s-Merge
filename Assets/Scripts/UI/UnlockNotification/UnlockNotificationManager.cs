@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -9,6 +10,7 @@ public class UnlockNotificationManager : MonoBehaviour
 {
     [SerializeField] private RectTransform _notificationPanel;
     [SerializeField] private Image _itemIcon;
+    [SerializeField] private TextMeshProUGUI _itemName;
     [SerializeField] private Image _overlay;
 
     [Header("Animation Settings")]
@@ -52,13 +54,14 @@ public class UnlockNotificationManager : MonoBehaviour
 
     private void OnPropUnlocked(PropUnlockedEvent message)
     {
-        ShowNotification(message.UnlockedPropIcon);
+        ShowNotification(message.UnlockedProp);
         SoundEffectManager.Instance.PlaySound("Unlock", Vector3.zero);
     }
 
-    private void ShowNotification(Sprite icon)
+    private void ShowNotification(Prop unlockedProp)
     {
-        _itemIcon.sprite = icon;
+        _itemIcon.sprite = unlockedProp.Icon;
+        _itemName.text = unlockedProp.Name;
 
         _isVisible = true;
         AnimatePanel(_shownPosition, _showEase, _showDuration);

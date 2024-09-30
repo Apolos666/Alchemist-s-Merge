@@ -10,18 +10,18 @@ public class UnlockSystem
     // Số điểm hiện tại của người chơi, tích lũy qua quá trình chơi.
     private int _currentPoints;
     // Hàm trả về icon của prop mở khóa theo cấp độ.
-    private readonly Func<int, Sprite> _getUnlockPropIcon;
+    private readonly Func<int, Prop> _getUnlockProp;
     
     /// <summary>
     /// Khởi tạo hệ thống mở khóa với các ngưỡng điểm và cấp độ mở khóa ban đầu.
     /// </summary>
     /// <param name="thresholds">Mảng chứa các ngưỡng điểm số cần thiết để mở khóa các cấp độ props tiếp theo.</param>
     /// <param name="initialUnlockLevel">Cấp độ props ban đầu được mở khóa khi bắt đầu trò chơi.</param>
-    public UnlockSystem(int[] thresholds, int initialUnlockLevel, Func<int, Sprite> getUnlockPropIcon)
+    public UnlockSystem(int[] thresholds, int initialUnlockLevel, Func<int, Prop> getUnlockProp)
     {
         _unlockThresholds = thresholds;
         CurrentUnlockLevel = initialUnlockLevel;
-        _getUnlockPropIcon = getUnlockPropIcon;
+        _getUnlockProp = getUnlockProp;
         _currentPoints = 0;
     }
 
@@ -53,7 +53,7 @@ public class UnlockSystem
 
     private void OnPropUnlocked()
     {
-        var sprite = _getUnlockPropIcon(CurrentUnlockLevel - 1);
-        EventBus.Publish(new PropUnlockedEvent(CurrentUnlockLevel, sprite));
+        var prop = _getUnlockProp(CurrentUnlockLevel - 1);
+        EventBus.Publish(new PropUnlockedEvent(CurrentUnlockLevel, prop));
     }
 }

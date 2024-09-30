@@ -5,26 +5,25 @@ public class HandMovementManager : MonoBehaviour
 {
     [SerializeField] private GameObject _objectToMove;
     [SerializeField] private Transform _holdPoint;
-    private Camera _mainCamera; 
+    [SerializeField] private Collider2D _movementArea;
+    [SerializeField] private LayerMask _movementLayer;
+    [SerializeField] private float _scaleDuration = 0.5f;
+    [SerializeField] private float _movementSpeed = 10f;
+
+    private Camera _mainCamera;
     private GameObject _heldPropObject; // The currently held prop object
     private Prop _heldProp; // The currently held prop
-    private bool _isHolding; 
-    private bool _canDrop = true; 
-    
-    [SerializeField] private Collider2D _movementArea; 
-    [SerializeField] private LayerMask _movementLayer; 
-    [SerializeField] private float _scaleDuration = 0.5f;
-    
+    private bool _isHolding;
+    private bool _canDrop = true;
     private bool _isInteractionAllowed = true;
     
     private void Start()
     {
-        _mainCamera = Camera.main; 
-        PickUpProp(); 
-        
+        _mainCamera = Camera.main;
+        PickUpProp();
         EventBus.Subscribe<UIStateChangedEvent>(OnUIStateChanged);
     }
-    
+
     private void OnDestroy()
     {
         EventBus.Unsubscribe<UIStateChangedEvent>(OnUIStateChanged);
@@ -37,53 +36,88 @@ public class HandMovementManager : MonoBehaviour
 
     private void Update()
     {
-        if (!_isInteractionAllowed || Input.touchCount <= 0) return;
+        if (!_isInteractionAllowed) return;
 
-        var touch = Input.GetTouch(0);
-        
-        var touchPosition = _mainCamera.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, _mainCamera.nearClipPlane));
-        
-        // Perform a raycast to detect if the touch is within the movement area
-        var hit = Physics2D.Raycast(touchPosition, Vector2.zero, Mathf.Infinity, _movementLayer);
-
-        if (hit.collider != null && hit.collider == _movementArea)
+        if (TryGetInput(out var inputPosition, out var isInputEnded))
         {
-            var newPosition = new Vector3(touchPosition.x, _objectToMove.transform.position.y, _objectToMove.transform.position.z);
-            _objectToMove.transform.position = newPosition;
+            HandleMovement(inputPosition, isInputEnded);
+        }
+    }
 
-            // Drop the prop if the touch has ended and the object is being held and can be dropped
-            if (touch.phase == TouchPhase.Ended && _isHolding && _canDrop)
+    private static bool TryGetInput(out Vector2 inputPosition, out bool isInputEnded)
+    {
+        inputPosition = Vector2.zero;
+        isInputEnded = false;
+
+        if (Input.touchCount > 0)
+        {
+            var touch = Input.GetTouch(0);
+            inputPosition = touch.position;
+            isInputEnded = touch.phase == TouchPhase.Ended;
+            return true;
+        }
+        else if (Input.GetMouseButton(0) || Input.GetMouseButtonUp(0))
+        {
+            inputPosition = Input.mousePosition;
+            isInputEnded = Input.GetMouseButtonUp(0);
+            return true;
+        }
+        return false;
+    }
+
+    private void HandleMovement(Vector2 inputPosition, bool isInputEnded)
+    {
+        var worldPosition = _mainCamera.ScreenToWorldPoint(new Vector3(inputPosition.x, inputPosition.y, _mainCamera.nearClipPlane));;
+        if (IsInMovementArea(worldPosition))
+        {
+            MoveObjectTo(worldPosition);
+            if (isInputEnded && _isHolding && _canDrop)
             {
                 DropProp();
             }
         }
     }
-    
+
+    private bool IsInMovementArea(Vector3 worldPosition)
+    {
+        var hit = Physics2D.Raycast(worldPosition, Vector2.zero, Mathf.Infinity, _movementLayer);
+        return hit.collider != null && hit.collider == _movementArea;
+    }
+
+    private void MoveObjectTo(Vector3 worldPosition)
+    {
+        var targetPosition = new Vector3(worldPosition.x, _objectToMove.transform.position.y, _objectToMove.transform.position.z);
+        var distance = Vector3.Distance(_objectToMove.transform.position, targetPosition);
+        var duration = distance / _movementSpeed;
+
+        _objectToMove.transform.DOMove(targetPosition, duration).SetEase(Ease.OutQuad);
+    }
+
     private void PickUpProp()
     {
         (_heldPropObject, _heldProp) = PropSelector.Instance.GetNextProp(_holdPoint.position);
-        _heldPropObject.GetComponent<Rigidbody2D>().gravityScale = 0;
-        _heldPropObject.GetComponent<Collider2D>().enabled = false; 
-        var objectScale = _heldProp.Prefab.transform.localScale; 
-        _heldPropObject.transform.SetParent(_holdPoint); 
-        _isHolding = true; 
-        _canDrop = false; 
+        var rb2d = _heldPropObject.GetComponent<Rigidbody2D>();
+        rb2d.gravityScale = 0;
+        _heldPropObject.GetComponent<Collider2D>().enabled = false;
+        _heldPropObject.transform.SetParent(_holdPoint);
+        _isHolding = true;
+        _canDrop = false;
         
+        // Animate the prop scaling up
+        var objectScale = _heldProp.Prefab.transform.localScale;
         _heldPropObject.transform.localScale = Vector3.zero;
-        _heldPropObject.transform
-            .DOScale(objectScale, _scaleDuration)
-            .SetEase(Ease.Linear)
-            .OnComplete(() => _canDrop = true); // Allow dropping after the scaling animation is complete
+        _heldPropObject.transform.DOScale(objectScale, _scaleDuration).SetEase(Ease.OutBack).OnComplete(() => _canDrop = true);
     }
 
     private void DropProp()
     {
-        _heldPropObject.GetComponent<Rigidbody2D>().gravityScale = 1; 
+        var rb2d = _heldPropObject.GetComponent<Rigidbody2D>();
+        rb2d.gravityScale = 1;
         _heldPropObject.GetComponent<Collider2D>().enabled = true;
-        _heldPropObject.transform.SetParent(null); 
-        _heldPropObject = null; 
-        _isHolding = false; 
-        
-        PickUpProp(); 
+        _heldPropObject.transform.SetParent(null);
+        _heldPropObject = null;
+        _isHolding = false;
+
+        PickUpProp();
     }
 }

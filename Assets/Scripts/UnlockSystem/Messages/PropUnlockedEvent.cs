@@ -3,10 +3,11 @@
 public class PropUnlockedEvent : IEvent
 {
     public int UnlockLevel { get; }
-    public Sprite UnlockedPropIcon { get; } 
-    public PropUnlockedEvent(int unlockLevel, Sprite unlockedPropIcon)
+    public Prop UnlockedProp { get; }
+    
+    public PropUnlockedEvent(int unlockLevel, Prop unlockedProp)
     {
         UnlockLevel = unlockLevel;
-        UnlockedPropIcon = unlockedPropIcon;
+        UnlockedProp = unlockedProp;
     }
 }

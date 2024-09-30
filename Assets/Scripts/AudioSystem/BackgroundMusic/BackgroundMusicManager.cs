@@ -20,7 +20,7 @@ public class BackgroundMusicManager : GenericSingleton<BackgroundMusicManager>
 
     private void PlayRandomTrack()
     {
-        var randomIndex = UnityEngine.Random.Range(0, musicTracks.Length);
+        var randomIndex = Random.Range(0, musicTracks.Length);
         if (musicTracks.Length > 0)
         {
             PlayMusic(randomIndex);

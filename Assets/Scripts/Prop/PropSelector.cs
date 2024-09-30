@@ -24,15 +24,15 @@ public class PropSelector : GenericSingleton<PropSelector>
 
     private void Start()
     {
-        _unlockSystem = new UnlockSystem(_unlockThresholds, _initialUnlockedProps, GetPropIconByIndex);
+        _unlockSystem = new UnlockSystem(_unlockThresholds, _initialUnlockedProps, GetPropByIndex);
         InitializePropQueue();
     }
 
-    private Sprite GetPropIconByIndex(int index)
+    private Prop GetPropByIndex(int index)
     {
         if (index >= 0 && index < _props.Length)
         {
-            return _props[index].Icon;
+            return _props[index];
         }
 
         return null;

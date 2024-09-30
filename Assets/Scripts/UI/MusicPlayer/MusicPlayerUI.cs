@@ -1,7 +1,7 @@
-﻿using DG.Tweening;
+﻿using System.Collections;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class MusicPlayerUI : MonoBehaviour
@@ -15,13 +15,32 @@ public class MusicPlayerUI : MonoBehaviour
     [SerializeField] private Image _playPauseIcon;
     [SerializeField] private Sprite _playSprite;
     [SerializeField] private Sprite _pauseSprite;
+    
+    private const float SAVE_DELAY = 0.5f;
+    private const string BackgroundVolumeKey = "BackgroundVolume";
+    private const string SFXVolumeKey = "SfxVolume";
+    private Coroutine _saveBackgroundVolumeCoroutine;
+    private Coroutine _saveSfxVolumeCoroutine;
 
     private void Start()
     {
         SetupButtonListeners();
         SetupEventSubscriptions();
         UpdateTrackName(BackgroundMusicManager.Instance.GetCurrentTrackName());
+        LoadSettings();
     }
+
+    private void LoadSettings()
+    {
+        var backgrounVolume = PlayerPrefs.GetFloat(BackgroundVolumeKey, 1f);
+        var sfxVolume = PlayerPrefs.GetFloat(SFXVolumeKey, 1f);
+        
+        _backgroundVolumeSlider.value = backgrounVolume;
+        _sfxVolumeSlider.value = sfxVolume;
+        
+        BackgroundMusicManager.Instance.SetVolume(backgrounVolume);
+        SoundEffectManager.Instance.SetVolume(sfxVolume);
+    }   
 
     private void SetupButtonListeners()
     {
@@ -46,12 +65,25 @@ public class MusicPlayerUI : MonoBehaviour
         _backgroundVolumeSlider.onValueChanged.AddListener(value =>
         {
             BackgroundMusicManager.Instance.SetVolume(value);
+            if (_saveBackgroundVolumeCoroutine != null)
+                StopCoroutine(_saveBackgroundVolumeCoroutine);
+            _saveBackgroundVolumeCoroutine = StartCoroutine(SaveSettingsDelayed(BackgroundVolumeKey, value));
         });
         
         _sfxVolumeSlider.onValueChanged.AddListener(value =>
         {
             SoundEffectManager.Instance.SetVolume(value);
+            if (_saveSfxVolumeCoroutine != null)
+                StopCoroutine(_saveSfxVolumeCoroutine);
+            _saveSfxVolumeCoroutine = StartCoroutine(SaveSettingsDelayed(SFXVolumeKey, value));
         });
+    }
+
+    private static IEnumerator SaveSettingsDelayed(string key, float value)
+    {
+        yield return new WaitForSeconds(SAVE_DELAY);
+        PlayerPrefs.SetFloat(key, value);
+        PlayerPrefs.Save();
     }
 
     private void SetupEventSubscriptions()
@@ -67,7 +99,14 @@ public class MusicPlayerUI : MonoBehaviour
         EventBus.Unsubscribe<PlayPauseChangedEvent>(OnPlayPauseChanged);
         EventBus.Unsubscribe<VolumeChangedEvent>(OnVolumeChanged);
     }
-
+    
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.SetFloat(BackgroundVolumeKey, _backgroundVolumeSlider.value);
+        PlayerPrefs.SetFloat(SFXVolumeKey, _sfxVolumeSlider.value);
+        PlayerPrefs.Save();
+    }
+    
     private void OnTrackChanged(TrackChangedEvent message)
     {
         UpdateTrackName(message.TrackName);
