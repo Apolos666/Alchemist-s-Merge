@@ -1,66 +1,99 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 public static class EventBus
 {
-    // Dictionary lưu trữ các danh sách các hành động (subscribers) cho từng loại sự kiện
-    private static readonly Dictionary<Type, List<Action<IEvent>>> Subscribers = new Dictionary<Type, List<Action<IEvent>>>();
-    
-    /// <summary>
-    /// Đăng ký một handler cho một loại sự kiện cụ thể
-    /// </summary>  
-    /// <param name="handler">Hàm xử lý sự kiện</param>
-    /// <typeparam name="T">Loại sự kiện</typeparam>
-    public static void Subscribe<T>(Action<T> handler) 
-        where T : IEvent
+    private static readonly Dictionary<Type, List<WeakSubscription>> Subscribers = new Dictionary<Type, List<WeakSubscription>>();
+
+    private class WeakSubscription
     {
-        var eventType = typeof(T);
-        
-        if (!Subscribers.ContainsKey(eventType))
+        private readonly WeakReference _targetRef;
+        private readonly Delegate _handler;
+
+        public WeakSubscription(object target, Delegate handler)
         {
-            Subscribers[eventType] = new List<Action<IEvent>>();
+            _targetRef = new WeakReference(target);
+            _handler = handler;
         }
-        
-        Subscribers[eventType].Add(evt => handler((T) evt));
+
+        public bool IsAlive => _targetRef.IsAlive;
+
+        public void Invoke(object[] args)
+        {
+            if (_targetRef.Target != null)
+            {
+                _handler.DynamicInvoke(args);
+            }
+        }
+
+        public bool Matches(object target, Delegate handler)
+        {
+            return _targetRef.Target == target && _handler == handler;
+        }
     }
-    
-    /// <summary>
-    /// Hủy đăng ký một handler cho một loại sự kiện cụ thể
-    /// </summary>
-    /// <param name="handler">Hàm xử lý sự kiện</param>
-    /// <typeparam name="T">Loại sự kiện</typeparam>
-    public static void Unsubscribe<T>(Action<T> handler) 
-        where T : IEvent
+
+    public static void Subscribe<T>(Action<T> handler) where T : IEvent
     {
         var eventType = typeof(T);
 
-        if (Subscribers.TryGetValue(eventType, out var handlers))
+        if (!Subscribers.TryGetValue(eventType, out var subscriptions))
         {
-            handlers.RemoveAll(h => h.Target == handler.Target && h.Method == handler.Method);
+            subscriptions = new List<WeakSubscription>();
+            Subscribers[eventType] = subscriptions;
+        }
+
+        var target = handler.Target ?? typeof(EventBus);
+        subscriptions.Add(new WeakSubscription(target, handler));
+    }
+
+    public static void Unsubscribe<T>(Action<T> handler) where T : IEvent
+    {
+        var eventType = typeof(T);
+
+        if (Subscribers.TryGetValue(eventType, out var subscriptions))
+        {
+            var target = handler.Target ?? typeof(EventBus);
+            subscriptions.RemoveAll(s => s.Matches(target, handler));
         }
     }
-    
-    /// <summary>
-    /// Phát hành một sự kiện đến tất cả các subscribers đã đăng ký
-    /// </summary>
-    /// <param name="eventData">Dữ liệu sự kiện</param>
-    /// <typeparam name="T">Loại sự kiện</typeparam>
-    public static void Publish<T>(T eventData) 
-        where T : IEvent
+
+    public static void Publish<T>(T eventData) where T : IEvent
+    {
+        var eventType = typeof(T);
+        if (Subscribers.TryGetValue(eventType, out var subscriptions))
+        {
+            foreach (var subscription in subscriptions.ToList().Where(subscription => subscription.IsAlive))
+            {
+                try
+                {
+                    subscription.Invoke(new object[] { eventData });
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError($"Error publishing event of type {eventType}: {e}");
+                }
+            }
+
+            // Clean up dead subscriptions
+            subscriptions.RemoveAll(s => !s.IsAlive);
+        }
+    }
+
+    public static void ClearAllSubscribers()
+    {
+        Subscribers.Clear();
+        Debug.Log("Cleared all subscribers");
+    }
+
+    public static void ClearSubscribers<T>() where T : IEvent
     {
         var eventType = typeof(T);
         if (Subscribers.TryGetValue(eventType, out var subscriber))
         {
-            foreach (var handler in subscriber)
-            {
-                try
-                {
-                    handler(eventData);
-                } catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
-            }
+            subscriber.Clear();
+            Debug.Log($"Cleared subscribers for {eventType}");
         }
     }
 }

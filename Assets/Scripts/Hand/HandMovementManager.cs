@@ -112,7 +112,7 @@ public class HandMovementManager : MonoBehaviour
     private void DropProp()
     {
         var rb2d = _heldPropObject.GetComponent<Rigidbody2D>();
-        rb2d.gravityScale = 1;
+        rb2d.gravityScale = 1;  
         _heldPropObject.GetComponent<Collider2D>().enabled = true;
         _heldPropObject.transform.SetParent(null);
         _heldPropObject = null;
