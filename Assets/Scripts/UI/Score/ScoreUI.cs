@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -7,20 +8,17 @@ public class ScoreUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _scoreText;
     [SerializeField] private TextMeshProUGUI _highScoreText;
     [SerializeField] private float _animationDuration = 0.5f;
-    [SerializeField] private AnimationCurve _animationCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
-    
-    private readonly ScoreTextEffect _scoreTextEffect = new ScoreTextEffect();
-    private readonly ScoreTextEffect _highScoreTextEffect = new ScoreTextEffect();
+    [SerializeField] private Ease _easeType = Ease.InOutQuad;
 
     private void Start()
     {
-        InitializeScores().Forget();
+        InitializeScores();
     }
 
-    private async UniTaskVoid InitializeScores()
+    private void InitializeScores()
     {
-        await _scoreTextEffect.AnimateTextTo(0, _scoreText, _animationDuration, _animationCurve);
-        await _highScoreTextEffect.AnimateTextTo(PlayerPrefs.GetInt(ScoreManager.HighScoreKey, 0), _highScoreText, _animationDuration, _animationCurve);
+        AnimateTextTo(0, _scoreText);
+        AnimateTextTo(PlayerPrefs.GetInt(ScoreManager.HighScoreKey, 0), _highScoreText);
     }
 
     private void OnEnable()
@@ -35,13 +33,24 @@ public class ScoreUI : MonoBehaviour
         EventBus.Unsubscribe<HighScoreUpdateEvent>(OnHighScoreUpdate);
     }
     
-    private async void OnTotalScoreChanged(TotalScoreChangedEvent message)
+    private void OnTotalScoreChanged(TotalScoreChangedEvent message)
     {
-        await _scoreTextEffect.AnimateTextTo(message.TotalScore, _scoreText, _animationDuration, _animationCurve);
+        AnimateTextTo(message.TotalScore, _scoreText);
     }
 
-    private async void OnHighScoreUpdate(HighScoreUpdateEvent message)
+    private void OnHighScoreUpdate(HighScoreUpdateEvent message)
     {
-        await _scoreTextEffect.AnimateTextTo(message.HighScore, _highScoreText, _animationDuration, _animationCurve);
+        AnimateTextTo(message.HighScore, _highScoreText);
+    }
+
+    private void AnimateTextTo(int targetValue, TextMeshProUGUI textComponent)
+    {
+        var startValue = int.Parse(textComponent.text);
+        DOTween.To(() => startValue, x => 
+            {
+                startValue = x;
+                textComponent.text = x.ToString();
+            }, targetValue, _animationDuration)
+            .SetEase(_easeType);
     }
 }
