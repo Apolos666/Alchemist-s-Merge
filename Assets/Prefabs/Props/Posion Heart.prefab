@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 903870325207177073}
   - component: {fileID: 903870325207177074}
   - component: {fileID: 7747149660060959697}
-  m_Layer: 31
+  m_Layer: 0
   m_Name: Posion Heart
   m_TagString: Prop
   m_Icon: {fileID: 0}

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8257636159285771645}
   - component: {fileID: 8257636159285771646}
   - component: {fileID: -3880425510901516856}
-  m_Layer: 31
+  m_Layer: 0
   m_Name: Pearl Leaf
   m_TagString: Prop
   m_Icon: {fileID: 0}

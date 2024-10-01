@@ -10,6 +10,7 @@ public class BackgroundMusicManager : GenericSingleton<BackgroundMusicManager>
     {
         base.Awake();
         audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.volume = PlayerPrefs.GetFloat(MusicPlayerUI.BackgroundVolumeKey, 1f);
         audioSource.loop = true;
     }
 

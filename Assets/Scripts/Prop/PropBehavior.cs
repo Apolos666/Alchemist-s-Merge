@@ -21,7 +21,6 @@ public class PropBehavior : MonoBehaviour
             _isProcessing = true;
             otherProp._isProcessing = true;
             StartCoroutine(MergeProps(other.gameObject));
-            EventBus.Publish(new ScoreUpdateEvent(_prop.Point));
         }   
     }
 
@@ -58,6 +57,7 @@ public class PropBehavior : MonoBehaviour
         if (_nextLevel is null) return;
         
         var newProp = Instantiate(_nextLevel.Prefab, spawnPosition, Quaternion.identity);
+        newProp.layer = LayerMask.NameToLayer("Item");
         
         // Thêm một lực nhỏ theo hướng ngẫu nhiên để tạo hiệu ứng "bật" ra
         var rb = newProp.GetComponent<Rigidbody2D>();

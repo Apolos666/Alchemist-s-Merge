@@ -40,18 +40,18 @@ public class PropSelector : GenericSingleton<PropSelector>
 
     private void OnEnable()
     {
-        EventBus.Subscribe<ScoreUpdateEvent>(OnScoreUpdate);
+        EventBus.Subscribe<ObjectMergingEvent>(OnScoreUpdate);
     }
 
     private void OnDisable()
     {
-        EventBus.Unsubscribe<ScoreUpdateEvent>(OnScoreUpdate);
+        EventBus.Unsubscribe<ObjectMergingEvent>(OnScoreUpdate);
     }
     
-    private void OnScoreUpdate(ScoreUpdateEvent message)
+    private void OnScoreUpdate(ObjectMergingEvent message)
     {
         // Khi điểm số thay đổi, cộng thêm điểm để cập nhật cấp độ mở khóa
-        _unlockSystem.AddPoints(message.Score);
+        _unlockSystem.AddPoints(message.Point);
     }
 
     private void InitializePropQueue()

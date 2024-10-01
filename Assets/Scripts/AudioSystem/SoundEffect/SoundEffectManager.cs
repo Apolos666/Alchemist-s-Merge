@@ -23,6 +23,7 @@ public class SoundEffectManager : GenericSingleton<SoundEffectManager>
         for (var i = 0; i < _poolSize; i++)
         {
             _audioSources[i] = gameObject.AddComponent<AudioSource>();
+            _audioSources[i].volume = PlayerPrefs.GetFloat(MusicPlayerUI.SFXVolumeKey, 1f);
         }
 
         foreach (var effect in _soundEffects)

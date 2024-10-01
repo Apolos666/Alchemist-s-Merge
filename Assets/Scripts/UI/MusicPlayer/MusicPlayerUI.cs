@@ -17,8 +17,8 @@ public class MusicPlayerUI : MonoBehaviour
     [SerializeField] private Sprite _pauseSprite;
     
     private const float SAVE_DELAY = 0.5f;
-    private const string BackgroundVolumeKey = "BackgroundVolume";
-    private const string SFXVolumeKey = "SfxVolume";
+    public const string BackgroundVolumeKey = "BackgroundVolume";
+    public const string SFXVolumeKey = "SfxVolume";
     private Coroutine _saveBackgroundVolumeCoroutine;
     private Coroutine _saveSfxVolumeCoroutine;
 

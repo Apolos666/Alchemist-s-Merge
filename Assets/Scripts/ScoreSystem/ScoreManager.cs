@@ -2,36 +2,36 @@
 
 public class ScoreManager : GenericSingleton<ScoreManager>
 {
-    private int _currentScore;
-    private int _highScore;
+    public int CurrentScore { get; private set; }
+    public int HighScore { get; private set; }
 
     public const string HighScoreKey = "HighScore";
 
     private void OnEnable()
     {
-        _highScore = PlayerPrefs.GetInt(HighScoreKey, 0);     
-        EventBus.Subscribe<ScoreUpdateEvent>(OnScoreUpdate);
+        HighScore = PlayerPrefs.GetInt(HighScoreKey, 0);     
+        EventBus.Subscribe<ObjectMergingEvent>(OnScoreUpdate);
     }
     
     private void OnDisable()
     {
-        EventBus.Unsubscribe<ScoreUpdateEvent>(OnScoreUpdate);
+        EventBus.Unsubscribe<ObjectMergingEvent>(OnScoreUpdate);
     }
 
-    private void OnScoreUpdate(ScoreUpdateEvent message)
+    private void OnScoreUpdate(ObjectMergingEvent message)
     {
-        _currentScore +=  message.Score;
-        EventBus.Publish(new TotalScoreChangedEvent(_currentScore));
+        CurrentScore +=  message.Point;
+        EventBus.Publish(new TotalScoreChangedEvent(CurrentScore));
         UpdateHighScore();
     }
 
     private void UpdateHighScore()
     {
-        if (_currentScore <= _highScore) return;
+        if (CurrentScore <= HighScore) return;
         
-        _highScore = _currentScore;
-        PlayerPrefs.SetInt(HighScoreKey, _highScore);
+        HighScore = CurrentScore;
+        PlayerPrefs.SetInt(HighScoreKey, HighScore);
         PlayerPrefs.Save();
-        EventBus.Publish(new HighScoreUpdateEvent(_highScore));
+        EventBus.Publish(new HighScoreUpdateEvent(HighScore));
     }
 }
