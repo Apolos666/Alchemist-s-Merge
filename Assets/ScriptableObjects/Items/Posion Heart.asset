@@ -15,4 +15,4 @@ MonoBehaviour:
   Name: Posion Heart
   Prefab: {fileID: 903870325207177086, guid: a2433d42b1a4ae640955cb4c1a4b511f, type: 3}
   Icon: {fileID: 21300000, guid: 7a62c84372d90f1498272e31c17a34b6, type: 3}
-  Point: 200
+  Point: 500

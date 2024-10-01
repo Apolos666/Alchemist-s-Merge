@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dcaa150f428429a46a861b7c1624c442, type: 3}
-  m_Name: Death Mushroom
+  m_Name: Weeping Bulb
   m_EditorClassIdentifier: 
-  Name: Death Mushroom
-  Prefab: {fileID: 1125101808027167923, guid: 05e413f6630992648960500a651dccb2, type: 3}
-  Icon: {fileID: 21300000, guid: 51b2d13cf6603a443868c076c4ac7e79, type: 3}
-  Point: 1000
+  Name: Weeping Bulb
+  Prefab: {fileID: 4539275926028240651, guid: 9905ccb185e4d424cbf2d884bc193a34, type: 3}
+  Icon: {fileID: 21300000, guid: f56b58091fd40dc4794689dc793755a0, type: 3}
+  Point: 150

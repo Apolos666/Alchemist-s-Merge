@@ -15,4 +15,4 @@ MonoBehaviour:
   Name: Eyes Leaf
   Prefab: {fileID: 2819613764094478227, guid: 681564eff434a8246b0a5c5bf1f59bad, type: 3}
   Icon: {fileID: 21300000, guid: 40ab3bf84f09dea4d8860f649bb73a5b, type: 3}
-  Point: 10
+  Point: 20

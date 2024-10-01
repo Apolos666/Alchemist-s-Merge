@@ -15,4 +15,4 @@ MonoBehaviour:
   Name: Face Coconut
   Prefab: {fileID: 7986443347838224037, guid: ab37c007f81794d43ab996b17e198b14, type: 3}
   Icon: {fileID: 21300000, guid: 1023fe524dcc8e541b6a16376eb71898, type: 3}
-  Point: 50
+  Point: 2

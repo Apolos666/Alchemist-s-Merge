@@ -5,7 +5,6 @@ public class PropBehavior : MonoBehaviour
 {
     [SerializeField] private Prop _prop;
     [SerializeField] private Prop _nextLevel;
-    [SerializeField] private bool _isMaxLevel;
     [SerializeField] private float _mergeDelay = 0.1f;
     [SerializeField] private float _spawnForce = 0.5f;
 
@@ -13,7 +12,7 @@ public class PropBehavior : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (_isMaxLevel || _isProcessing) return;
+        if (_isProcessing) return;
         
         var otherProp = other.gameObject.GetComponent<PropBehavior>();
         if (otherProp != null && otherProp._prop == _prop && !otherProp._isProcessing)
@@ -45,7 +44,11 @@ public class PropBehavior : MonoBehaviour
             yield return null;
         }
         
-        EventBus.Publish(new ObjectMergingEvent(midPoint, _nextLevel.Prefab.transform.localScale, _prop.Point));
+        EventBus.Publish(
+            new ObjectMergingEvent(
+                midPoint,
+                _nextLevel ? _nextLevel.Prefab.transform.localScale : Vector3.zero, 
+                _prop.Point));
         SpawnNextLevelProp(midPoint);
         
         Destroy(otherProp);
@@ -54,7 +57,7 @@ public class PropBehavior : MonoBehaviour
 
     private void SpawnNextLevelProp(Vector3 spawnPosition)
     {
-        if (_nextLevel is null) return;
+        if (_nextLevel?.Prefab is null) return;  
         
         var newProp = Instantiate(_nextLevel.Prefab, spawnPosition, Quaternion.identity);
         newProp.layer = LayerMask.NameToLayer("Item");

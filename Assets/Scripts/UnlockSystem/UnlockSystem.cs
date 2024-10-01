@@ -29,7 +29,7 @@ public class UnlockSystem
     // Sau khi cộng điểm, sẽ kiểm tra xem có đủ để mở khóa cấp độ mới không.
     public void AddPoints(int points)
     {
-        _currentPoints = points;
+        _currentPoints += points;
         CheckForUnlocks();
     }
 

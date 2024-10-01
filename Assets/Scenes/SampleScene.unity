@@ -3548,28 +3548,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _props:
   - {fileID: 11400000, guid: 1d0be5f4c06ee554083a672ceecc171e, type: 2}
-  - {fileID: 11400000, guid: 37cc7bb1f67e4c74297fe874bf39003d, type: 2}
-  - {fileID: 11400000, guid: c819e3091464a474a9acf6106ad34073, type: 2}
-  - {fileID: 11400000, guid: 593c0cad4bd06c148a454504dda26d50, type: 2}
   - {fileID: 11400000, guid: 31d34f396fa52e54f9f6d314273fd55f, type: 2}
+  - {fileID: 11400000, guid: 37cc7bb1f67e4c74297fe874bf39003d, type: 2}
+  - {fileID: 11400000, guid: a14b8842395efa54592aa3cf476fb2eb, type: 2}
+  - {fileID: 11400000, guid: e9715faad7fe88e4e917bcd226ceac04, type: 2}
+  - {fileID: 11400000, guid: c819e3091464a474a9acf6106ad34073, type: 2}
+  - {fileID: 11400000, guid: 4ef28d077f23d384ca9a0e9274026dca, type: 2}
+  - {fileID: 11400000, guid: 809e6c5e7e0ef064c8f20591e12b5469, type: 2}
+  - {fileID: 11400000, guid: 0bf957a8cdcc16f479f6abb5f92a60b1, type: 2}
+  - {fileID: 11400000, guid: f4606bb89aaedca43b4d553630d8d15d, type: 2}
+  - {fileID: 11400000, guid: b0c1d65c8eea34347949851fef664d77, type: 2}
   - {fileID: 11400000, guid: 6538e5ccf9d70b34fa809a7e5b75cf87, type: 2}
   - {fileID: 11400000, guid: e6f58357508b08f458a7f23e9e981a4e, type: 2}
-  - {fileID: 11400000, guid: 4ef28d077f23d384ca9a0e9274026dca, type: 2}
+  - {fileID: 11400000, guid: c83c9cf2cbc0f934ea10ec56c6c388ae, type: 2}
+  - {fileID: 11400000, guid: 593c0cad4bd06c148a454504dda26d50, type: 2}
+  - {fileID: 11400000, guid: 4e983e45f4f81c544ae2fa932f192717, type: 2}
   - {fileID: 11400000, guid: a37cb18ce453f494a860b1fc5ec7fc3e, type: 2}
   - {fileID: 11400000, guid: 8107aac8f57cb5e4ca3aea47ecfac43a, type: 2}
   _baseSpawnWeights:
   - 100
+  - 90
   - 80
+  - 70
   - 60
+  - 50
+  - 45
   - 40
+  - 35
   - 30
   - 25
   - 20
   - 15
+  - 12
   - 10
+  - 8
+  - 6
   - 5
-  _initialUnlockedProps: 10
-  _unlockThresholds: 000000000100000006000000100000002400000056000000ba00000082010000760300005e070000
+  _initialUnlockedProps: 1
+  _unlockThresholds: 000000000a000000190000003200000064000000c8000000900100002003000040060000800c000000190000003200000064000000c8000000900100002003000040060000800c00
   _newPropWeightMultiplier: 0.8
 --- !u!1 &945241578
 GameObject:
@@ -4783,7 +4799,7 @@ MonoBehaviour:
   _highestScoreText: {fileID: 840775942}
   _totalPlaytimeText: {fileID: 1226978597}
   _panelAnimationDuration: 0.5
-  _textAnimationDuration: 0.5
+  _textAnimationDuration: 1
 --- !u!1 &1189286511
 GameObject:
   m_ObjectHideFlags: 0
@@ -10939,63 +10955,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1309016149}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1618703701
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1618703703}
-  - component: {fileID: 1618703702}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!61 &1618703702
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1618703701}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.07299209, y: -0.55}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 3.7737017, y: 0.6593704}
-  m_EdgeRadius: 0
---- !u!4 &1618703703
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1618703701}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1635515420
 GameObject:
