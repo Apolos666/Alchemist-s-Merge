@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1323517217559780123}
   - component: {fileID: -1028191883245300718}
   - component: {fileID: 8983018417631517006}
+  - component: {fileID: 5325334413958692405}
   m_Layer: 0
   m_Name: Homunculus Root
   m_TagString: Prop
@@ -197,3 +198,15 @@ PolygonCollider2D:
       - {x: 0.03, y: 0.75}
       - {x: 0.03, y: 0.74}
       - {x: 0.04, y: 0.74}
+--- !u!114 &5325334413958692405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1323517217559780116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bfd6fba8b1357e42ac1b2a9f205a515, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

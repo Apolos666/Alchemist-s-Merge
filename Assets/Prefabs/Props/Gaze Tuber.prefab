@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1125101808027167932}
   - component: {fileID: 8347189559965932364}
   - component: {fileID: -5764683928748806706}
+  - component: {fileID: 3710226717348585712}
   m_Layer: 0
   m_Name: Gaze Tuber
   m_TagString: Prop
@@ -173,3 +174,15 @@ MonoBehaviour:
   _nextLevel: {fileID: 11400000, guid: 8107aac8f57cb5e4ca3aea47ecfac43a, type: 2}
   _mergeDelay: 0.1
   _spawnForce: 0.5
+--- !u!114 &3710226717348585712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125101808027167923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bfd6fba8b1357e42ac1b2a9f205a515, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

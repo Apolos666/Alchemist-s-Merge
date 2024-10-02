@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5218045280522132957}
   - component: {fileID: 6457433749711952237}
   - component: {fileID: 7583357953759269052}
+  - component: {fileID: 3434495891132635746}
   m_Layer: 0
   m_Name: Frostberry Delight
   m_TagString: Prop
@@ -159,3 +160,15 @@ MonoBehaviour:
   _nextLevel: {fileID: 11400000, guid: 0bf957a8cdcc16f479f6abb5f92a60b1, type: 2}
   _mergeDelay: 0.1
   _spawnForce: 0.5
+--- !u!114 &3434495891132635746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5218045280522132946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bfd6fba8b1357e42ac1b2a9f205a515, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

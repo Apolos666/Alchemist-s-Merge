@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2465959413860933932}
   - component: {fileID: 2465959413860933935}
   - component: {fileID: 1067984460161943375}
+  - component: {fileID: 2783957774522347977}
   m_Layer: 0
   m_Name: Seed
   m_TagString: Prop
@@ -160,3 +161,15 @@ MonoBehaviour:
   _nextLevel: {fileID: 11400000, guid: 31d34f396fa52e54f9f6d314273fd55f, type: 2}
   _mergeDelay: 0.1
   _spawnForce: 0.5
+--- !u!114 &2783957774522347977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2465959413860933923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bfd6fba8b1357e42ac1b2a9f205a515, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

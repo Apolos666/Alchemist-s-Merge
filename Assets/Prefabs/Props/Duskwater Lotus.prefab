@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3332172421990434998}
   - component: {fileID: 3332172421990434997}
   - component: {fileID: 1110425663360157143}
+  - component: {fileID: 7881634143943854893}
   m_Layer: 0
   m_Name: Duskwater Lotus
   m_TagString: Prop
@@ -164,3 +165,15 @@ MonoBehaviour:
   _nextLevel: {fileID: 11400000, guid: c819e3091464a474a9acf6106ad34073, type: 2}
   _mergeDelay: 0.1
   _spawnForce: 0.5
+--- !u!114 &7881634143943854893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3332172421990435001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bfd6fba8b1357e42ac1b2a9f205a515, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

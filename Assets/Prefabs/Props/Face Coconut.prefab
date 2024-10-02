@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7986443347838224042}
   - component: {fileID: 7986443347838224041}
   - component: {fileID: -3625781333315285507}
+  - component: {fileID: 6693611683197336591}
   m_Layer: 0
   m_Name: Face Coconut
   m_TagString: Prop
@@ -162,3 +163,15 @@ MonoBehaviour:
   _nextLevel: {fileID: 11400000, guid: 37cc7bb1f67e4c74297fe874bf39003d, type: 2}
   _mergeDelay: 0.1
   _spawnForce: 0.5
+--- !u!114 &6693611683197336591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7986443347838224037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bfd6fba8b1357e42ac1b2a9f205a515, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2794466863369491035}
   - component: {fileID: 545137480092196666}
   - component: {fileID: 957812523713929736}
+  - component: {fileID: 5408824350559548565}
   m_Layer: 0
   m_Name: Witchroot Effigy
   m_TagString: Prop
@@ -189,3 +190,15 @@ PolygonCollider2D:
       - {x: 0.06168355, y: -0.9809696}
     - - {x: -0.59999996, y: -0.48}
       - {x: -0.59, y: -0.48999998}
+--- !u!114 &5408824350559548565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2794466863369491028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bfd6fba8b1357e42ac1b2a9f205a515, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

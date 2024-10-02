@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4539275926028240644}
   - component: {fileID: 2281627432727202405}
   - component: {fileID: 8050857174131885177}
+  - component: {fileID: 4625029048644270963}
   m_Layer: 0
   m_Name: Weeping Bulb
   m_TagString: Prop
@@ -177,3 +178,15 @@ PolygonCollider2D:
       - {x: -0.089999996, y: -0.79999995}
     - - {x: -0.19, y: 0.48999998}
       - {x: -0.21, y: 0.47}
+--- !u!114 &4625029048644270963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4539275926028240651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bfd6fba8b1357e42ac1b2a9f205a515, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

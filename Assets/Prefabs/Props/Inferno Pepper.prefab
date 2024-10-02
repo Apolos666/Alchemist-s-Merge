@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2261762718877437881}
   - component: {fileID: 4482245314282111704}
   - component: {fileID: 1994744872594727026}
+  - component: {fileID: -7422746156949862272}
   m_Layer: 0
   m_Name: Inferno Pepper
   m_TagString: Prop
@@ -159,3 +160,15 @@ PolygonCollider2D:
       - {x: 0.31320927, y: -0.8272872}
       - {x: 0.59667563, y: -0.60099524}
       - {x: 0.7153737, y: -0.3312722}
+--- !u!114 &-7422746156949862272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2261762718877437878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bfd6fba8b1357e42ac1b2a9f205a515, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

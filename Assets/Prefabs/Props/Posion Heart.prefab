@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 903870325207177073}
   - component: {fileID: 903870325207177074}
   - component: {fileID: 7747149660060959697}
+  - component: {fileID: -4968187213636695442}
   m_Layer: 0
   m_Name: Posion Heart
   m_TagString: Prop
@@ -163,3 +164,15 @@ MonoBehaviour:
   _nextLevel: {fileID: 11400000, guid: c83c9cf2cbc0f934ea10ec56c6c388ae, type: 2}
   _mergeDelay: 0.1
   _spawnForce: 0.5
+--- !u!114 &-4968187213636695442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 903870325207177086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bfd6fba8b1357e42ac1b2a9f205a515, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 521117977132149247}
   - component: {fileID: 521117977132149244}
   - component: {fileID: -2852141468657222074}
+  - component: {fileID: -3916048574503350732}
   m_Layer: 0
   m_Name: Demon Fruit
   m_TagString: Prop
@@ -166,3 +167,15 @@ MonoBehaviour:
   _nextLevel: {fileID: 0}
   _mergeDelay: 0.1
   _spawnForce: 0.5
+--- !u!114 &-3916048574503350732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 521117977132149232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bfd6fba8b1357e42ac1b2a9f205a515, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

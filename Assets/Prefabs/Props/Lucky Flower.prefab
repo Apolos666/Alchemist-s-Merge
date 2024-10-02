@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6615600328935093546}
   - component: {fileID: 6615600328935093545}
   - component: {fileID: -7543441855547853971}
+  - component: {fileID: -5690381754759957168}
   m_Layer: 0
   m_Name: Lucky Flower
   m_TagString: Prop
@@ -176,3 +177,15 @@ MonoBehaviour:
   _nextLevel: {fileID: 11400000, guid: a14b8842395efa54592aa3cf476fb2eb, type: 2}
   _mergeDelay: 0.1
   _spawnForce: 0.5
+--- !u!114 &-5690381754759957168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6615600328935093541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bfd6fba8b1357e42ac1b2a9f205a515, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5838995143221417323}
   - component: {fileID: 8097190987189262346}
   - component: {fileID: -7970062045891808152}
+  - component: {fileID: 1421966778742494400}
   m_Layer: 0
   m_Name: Midnight Bloom
   m_TagString: Prop
@@ -186,3 +187,15 @@ PolygonCollider2D:
       - {x: -0.22, y: -0.37}
     - - {x: 0.03, y: 0.02}
       - {x: 0.03, y: 0}
+--- !u!114 &1421966778742494400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5838995143221417316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bfd6fba8b1357e42ac1b2a9f205a515, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
