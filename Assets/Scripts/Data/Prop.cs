@@ -8,3 +8,5 @@ public class Prop : ScriptableObject
     public Sprite Icon;
     public int Point;
 }
+
+

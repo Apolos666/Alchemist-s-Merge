@@ -16,7 +16,7 @@ public class HandMovementManager : MonoBehaviour
     private bool _isHolding;
     private bool _canDrop = true;
     private bool _isInteractionAllowed = true;
-    
+
     private void Start()
     {
         _mainCamera = Camera.main;
@@ -62,12 +62,15 @@ public class HandMovementManager : MonoBehaviour
             isInputEnded = Input.GetMouseButtonUp(0);
             return true;
         }
+
         return false;
     }
 
     private void HandleMovement(Vector2 inputPosition, bool isInputEnded)
     {
-        var worldPosition = _mainCamera.ScreenToWorldPoint(new Vector3(inputPosition.x, inputPosition.y, _mainCamera.nearClipPlane));;
+        var worldPosition =
+            _mainCamera.ScreenToWorldPoint(new Vector3(inputPosition.x, inputPosition.y, _mainCamera.nearClipPlane));
+        ;
         if (IsInMovementArea(worldPosition))
         {
             MoveObjectTo(worldPosition);
@@ -86,7 +89,8 @@ public class HandMovementManager : MonoBehaviour
 
     private void MoveObjectTo(Vector3 worldPosition)
     {
-        var targetPosition = new Vector3(worldPosition.x, _objectToMove.transform.position.y, _objectToMove.transform.position.z);
+        var targetPosition = new Vector3(worldPosition.x, _objectToMove.transform.position.y,
+            _objectToMove.transform.position.z);
         var distance = Vector3.Distance(_objectToMove.transform.position, targetPosition);
         var duration = distance / _movementSpeed;
 
@@ -102,17 +106,18 @@ public class HandMovementManager : MonoBehaviour
         _heldPropObject.transform.SetParent(_holdPoint);
         _isHolding = true;
         _canDrop = false;
-        
+
         // Animate the prop scaling up
         var objectScale = _heldProp.Prefab.transform.localScale;
         _heldPropObject.transform.localScale = Vector3.zero;
-        _heldPropObject.transform.DOScale(objectScale, _scaleDuration).SetEase(Ease.OutBack).OnComplete(() => _canDrop = true);
+        _heldPropObject.transform.DOScale(objectScale, _scaleDuration).SetEase(Ease.OutBack)
+            .OnComplete(() => _canDrop = true);
     }
 
     private void DropProp()
     {
         var rb2d = _heldPropObject.GetComponent<Rigidbody2D>();
-        rb2d.gravityScale = 1;  
+        rb2d.gravityScale = 1;
         _heldPropObject.GetComponent<Collider2D>().enabled = true;
         _heldPropObject.transform.SetParent(null);
         _heldPropObject = null;

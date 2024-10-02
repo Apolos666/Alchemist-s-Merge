@@ -131,4 +131,15 @@ public class PropSelector : GenericSingleton<PropSelector>
         AddNewPropToQueue();
         return (newProp, prop);
     }
+
+    public void ApplyEnchantedSeed(EnchantedProp enchantedProp)
+    {
+        if (_propQueue.Count > 0)
+        {
+            _propQueue.Dequeue();
+            _propQueue.Enqueue(enchantedProp);
+            
+            EventBus.Publish(new NextPropReadyEvent(_propQueue.Peek()));
+        }
+    }
 }

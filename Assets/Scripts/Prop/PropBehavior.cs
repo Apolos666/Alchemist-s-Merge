@@ -70,4 +70,14 @@ public class PropBehavior : MonoBehaviour
             rb.AddForce(randomDirection * _spawnForce, ForceMode2D.Impulse);
         }
     }
+    
+    public void DestroyAndNotify()
+    {
+        if (_isProcessing) return;
+        _isProcessing = true;
+
+        EventBus.Publish(new PropBeingDestroyEvent(transform.position, _prop.Point, _prop.Prefab.transform.localScale));
+
+        Destroy(gameObject);
+    }
 }

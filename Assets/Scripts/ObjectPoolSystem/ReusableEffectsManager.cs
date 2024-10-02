@@ -16,17 +16,30 @@ public class ReusableEffectsManager : MonoBehaviour
     private void OnEnable()
     {
         EventBus.Subscribe<ObjectMergingEvent>(OnObjectMerging);
+        EventBus.Subscribe<PropBeingDestroyEvent>(OnPropBeingDestroy);
     }
 
     private void OnDisable()
     {
         EventBus.Unsubscribe<ObjectMergingEvent>(OnObjectMerging);
+        EventBus.Unsubscribe<PropBeingDestroyEvent>(OnPropBeingDestroy);
     }
 
     private void Start()
     {
         ObjectPoolManager.Instance.CreatePool(_vfxController, _vfxParent, _vfxPoolSize);
         ObjectPoolManager.Instance.CreatePool(_floatingTextController, _floatingTextParent, _floatingTextPoolSize);
+    }
+    
+    private void OnPropBeingDestroy(PropBeingDestroyEvent message)
+    {
+        var vfxController = ObjectPoolManager.Instance.Spawn<AnimatedVFXController>(message.MergePosition, Quaternion.identity, message.NextPropSize + _additionalScale);
+        vfxController.PlaySpawnAnimation();
+        
+        var floatTextController = ObjectPoolManager.Instance.Spawn<FloatingTextController>(message.MergePosition, Quaternion.identity);
+        floatTextController.SetText(message.Point.ToString());
+        
+        SoundEffectManager.Instance.PlaySound("MergedObject", message.MergePosition);
     }
     
     private void OnObjectMerging(ObjectMergingEvent message)
