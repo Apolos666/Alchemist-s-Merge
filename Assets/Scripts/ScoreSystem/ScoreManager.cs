@@ -11,16 +11,25 @@ public class ScoreManager : GenericSingleton<ScoreManager>
     {
         HighScore = PlayerPrefs.GetInt(HighScoreKey, 0);     
         EventBus.Subscribe<ObjectMergingEvent>(OnScoreUpdate);
+        EventBus.Subscribe<PropBeingDestroyEvent>(OnPropBeingDestroyEvent);
     }
-    
+
     private void OnDisable()
     {
         EventBus.Unsubscribe<ObjectMergingEvent>(OnScoreUpdate);
+        EventBus.Unsubscribe<PropBeingDestroyEvent>(OnPropBeingDestroyEvent);
     }
 
     private void OnScoreUpdate(ObjectMergingEvent message)
     {
         CurrentScore +=  message.Point;
+        EventBus.Publish(new TotalScoreChangedEvent(CurrentScore));
+        UpdateHighScore();
+    }
+    
+    private void OnPropBeingDestroyEvent(PropBeingDestroyEvent message)
+    {
+        CurrentScore += message.Point;
         EventBus.Publish(new TotalScoreChangedEvent(CurrentScore));
         UpdateHighScore();
     }
