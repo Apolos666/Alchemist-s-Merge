@@ -27,8 +27,8 @@ public class FloatingTextController : MonoBehaviour, IPoolable
         floatSequence?.Kill();
     }
     
-    public void SetText(string text)
+    public void SetText(string prefix, string value)
     {
-        _text.text = $"Merged: {text}";
+        _text.text = $"{prefix} {value}";
     }
 }

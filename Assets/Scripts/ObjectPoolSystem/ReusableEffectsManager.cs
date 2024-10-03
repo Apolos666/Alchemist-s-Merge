@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using DG.Tweening;
+using UnityEngine;
 
 public class ReusableEffectsManager : MonoBehaviour
 {
@@ -12,17 +13,22 @@ public class ReusableEffectsManager : MonoBehaviour
     [SerializeField] private FloatingTextController _floatingTextController;
     [SerializeField] private int _floatingTextPoolSize = 10;
     [SerializeField] private Transform _floatingTextParent;
+    [SerializeField] private Vector3 _floatingTextOffset = new Vector3(0, 0.5f, 0);
+    [SerializeField] private float _floatingTextDelay = 0.2f;
+
 
     private void OnEnable()
     {
         EventBus.Subscribe<ObjectMergingEvent>(OnObjectMerging);
         EventBus.Subscribe<PropBeingDestroyEvent>(OnPropBeingDestroy);
+        EventBus.Subscribe<GoldEarnEvent>(OnGoldEarned);
     }
 
     private void OnDisable()
     {
         EventBus.Unsubscribe<ObjectMergingEvent>(OnObjectMerging);
         EventBus.Unsubscribe<PropBeingDestroyEvent>(OnPropBeingDestroy);
+        EventBus.Unsubscribe<GoldEarnEvent>(OnGoldEarned);
     }
 
     private void Start()
@@ -31,13 +37,22 @@ public class ReusableEffectsManager : MonoBehaviour
         ObjectPoolManager.Instance.CreatePool(_floatingTextController, _floatingTextParent, _floatingTextPoolSize);
     }
     
+    private void OnGoldEarned(GoldEarnEvent message)
+    {
+        DOVirtual.DelayedCall(_floatingTextDelay, () =>
+        {
+            var floatTextController = ObjectPoolManager.Instance.Spawn<FloatingTextController>(message.Position + _floatingTextOffset, Quaternion.identity);
+            floatTextController.SetText("Coin:", message.Amount.ToString());
+        });
+    }
+    
     private void OnPropBeingDestroy(PropBeingDestroyEvent message)
     {
         var vfxController = ObjectPoolManager.Instance.Spawn<AnimatedVFXController>(message.MergePosition, Quaternion.identity, message.NextPropSize + _additionalScale);
         vfxController.PlaySpawnAnimation();
         
         var floatTextController = ObjectPoolManager.Instance.Spawn<FloatingTextController>(message.MergePosition, Quaternion.identity);
-        floatTextController.SetText(message.Point.ToString());
+        floatTextController.SetText("Merged:", message.Point.ToString());
         
         SoundEffectManager.Instance.PlaySound("MergedObject", message.MergePosition);
     }
@@ -48,7 +63,7 @@ public class ReusableEffectsManager : MonoBehaviour
         vfxController.PlaySpawnAnimation();
         
         var floatTextController = ObjectPoolManager.Instance.Spawn<FloatingTextController>(message.MergePosition, Quaternion.identity);
-        floatTextController.SetText(message.Point.ToString());
+        floatTextController.SetText("Merged:", message.Point.ToString());
         
         SoundEffectManager.Instance.PlaySound("MergedObject", message.MergePosition);
     }

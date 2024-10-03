@@ -49,6 +49,9 @@ public class PropBehavior : MonoBehaviour
                 midPoint,
                 _nextLevel ? _nextLevel.Prefab.transform.localScale : Vector3.zero, 
                 _prop.Point));
+        
+        TryEarnGold(midPoint);
+        
         SpawnNextLevelProp(midPoint);
         
         Destroy(otherProp);
@@ -76,8 +79,18 @@ public class PropBehavior : MonoBehaviour
         if (_isProcessing) return;
         _isProcessing = true;
 
+        TryEarnGold(transform.position);
+        
         EventBus.Publish(new PropBeingDestroyEvent(transform.position, _prop.Point, _prop.Prefab.transform.localScale));
 
         Destroy(gameObject);
+    }
+    
+    private void TryEarnGold(Vector3 midPoint)
+    {
+        if (Random.Range(0f, 100f) <= _prop.GoldChance)
+        {
+            EventBus.Publish(new GoldEarnEvent(_prop.GoldAmount, midPoint));
+        }
     }
 }

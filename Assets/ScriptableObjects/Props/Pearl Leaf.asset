@@ -16,3 +16,5 @@ MonoBehaviour:
   Prefab: {fileID: 8257636159285771634, guid: 323eed7a499200c42bfc3c0f5d02aa10, type: 3}
   Icon: {fileID: 21300000, guid: 0c5a007c47a31124a882aa3f50f0f10e, type: 3}
   Point: 50
+  GoldChance: 70
+  GoldAmount: 40

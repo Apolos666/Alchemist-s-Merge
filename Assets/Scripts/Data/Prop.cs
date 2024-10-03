@@ -7,6 +7,9 @@ public class Prop : ScriptableObject
     public GameObject Prefab;
     public Sprite Icon;
     public int Point;
+    [Range(0, 100)]
+    public float GoldChance;
+    public int GoldAmount;
 }
 
 
