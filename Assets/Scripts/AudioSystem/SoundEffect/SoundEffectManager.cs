@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class SoundEffectManager : GenericSingleton<SoundEffectManager>
+public class SoundEffectManager : GenericPersistentSingleton<SoundEffectManager>
 {
     [SerializeField] private SoundEffect[] _soundEffects;
     [SerializeField] private int _poolSize = 5;

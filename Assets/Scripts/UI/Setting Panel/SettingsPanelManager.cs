@@ -70,7 +70,6 @@ public class SettingsPanelManager : MonoBehaviour
 
     public void ToggleSettings()
     {
-        Debug.Log("ToggleSettings");
         if (_isVisible)
             HideSettings();
         else

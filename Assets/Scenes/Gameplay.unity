@@ -549,7 +549,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1471170498}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &161590681
 MonoBehaviour:
@@ -1017,71 +1017,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 299518787}
   m_CullTransparentMesh: 0
---- !u!1 &383410209
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 383410210}
-  - component: {fileID: 383410211}
-  m_Layer: 0
-  m_Name: SoundEffectManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &383410210
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 383410209}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1471170498}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &383410211
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 383410209}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13916f52226a58c49add2ef0830011e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _soundEffects:
-  - name: MergedObject
-    clips:
-    - {fileID: 8300000, guid: 70ac0c859525ac54796be45da1e1235d, type: 3}
-    pitchVariance: 0.69
-    basePitch: 0.128
-  - name: Unlock
-    clips:
-    - {fileID: 8300000, guid: eb274689959ad724c94667a3c9a6fde4, type: 3}
-    pitchVariance: 1.17
-    basePitch: 0.648
-  - name: Drink Potion
-    clips:
-    - {fileID: 8300000, guid: c4fcb17ba702338428445cc5c9dc7116, type: 3}
-    pitchVariance: 1.05
-    basePitch: 0.735
-  - name: Enchanted Prop
-    clips:
-    - {fileID: 8300000, guid: 326c7cdd86e548a4d8070bbee03cde2f, type: 3}
-    pitchVariance: 1.05
-    basePitch: 0.735
-  _poolSize: 8
 --- !u!1001 &393803097
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4813,8 +4748,6 @@ Transform:
   - {fileID: 943903957}
   - {fileID: 1454770394}
   - {fileID: 442090181}
-  - {fileID: 383410210}
-  - {fileID: 2110398314}
   - {fileID: 161590680}
   m_Father: {fileID: 0}
   m_RootOrder: 5
@@ -6429,56 +6362,6 @@ MonoBehaviour:
     m_Bits: 1073741824
   _scaleDuration: 0.5
   _movementSpeed: 6
---- !u!1 &2110398313
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2110398314}
-  - component: {fileID: 2110398316}
-  m_Layer: 0
-  m_Name: BackgroundMusicManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2110398314
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2110398313}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1471170498}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2110398316
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2110398313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12e2d95b61245b144b1301c22b949cfc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  musicTracks:
-  - name: The Veil of Night
-    clip: {fileID: 8300000, guid: c2f1c661d6e59cb4ba58fde6c9bd8862, type: 3}
-  - name: Something's wrong
-    clip: {fileID: 8300000, guid: cf73b3f09f32eb14db7136c7620b4485, type: 3}
-  - name: Midnight Dreams
-    clip: {fileID: 8300000, guid: 436f4912787e71946bc6dc2f3f2f35a8, type: 3}
 --- !u!1001 &407863751459997698
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class BackgroundMusicManager : GenericSingleton<BackgroundMusicManager>
+public class BackgroundMusicManager : GenericPersistentSingleton<BackgroundMusicManager>
 {
     [SerializeField] private MusicTrack[] musicTracks;
     private AudioSource audioSource;
