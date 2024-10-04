@@ -346,9 +346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e6df21d95cb44ed9c275869a324b068, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemName: Enchanted Seed
-  _quantity: 200
-  _cooldownTime: 5
+  itemData: {fileID: 11400000, guid: 5a2783041fca6874aa32053f2939fce6, type: 2}
   _enchantedProp: {fileID: 11400000, guid: c88c511bf6753ef48b2fd876ad14f016, type: 2}
 --- !u!1 &93204484
 GameObject:
@@ -520,49 +518,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 154826031}
   m_CullTransparentMesh: 0
---- !u!1 &161590679
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 161590680}
-  - component: {fileID: 161590681}
-  m_Layer: 0
-  m_Name: CurrencyManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &161590680
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 161590679}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1471170498}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &161590681
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 161590679}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 745551f873f6d7247b6cc0b8c91d4e96, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &162699979
 GameObject:
   m_ObjectHideFlags: 0
@@ -4748,7 +4703,6 @@ Transform:
   - {fileID: 943903957}
   - {fileID: 1454770394}
   - {fileID: 442090181}
-  - {fileID: 161590680}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6157,12 +6111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ea72688e7e14139ae3f7539fe51e7f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemName: Shake Potion
-  _quantity: 200
-  _cooldownTime: 5
-  _strength: 0.3
-  _endValue: 0.8
-  _duration: 0.8
+  itemData: {fileID: 11400000, guid: bca72d388e6e7ae4db4d677bfb75f635, type: 2}
 --- !u!1 &2057879965
 GameObject:
   m_ObjectHideFlags: 0

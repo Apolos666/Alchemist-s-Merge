@@ -2,12 +2,11 @@
 
 public class Potion : GameItem
 {
-    [SerializeField] private float _strength;
-    public float Strength => _strength;
-    [SerializeField] private float _endValue;
-    public float EndValue => _endValue;
-    [SerializeField] private float _duration;
-    public float Duration => _duration;
+    private PotionItemData PotionData => itemData as PotionItemData;
+
+    public float Strength => PotionData.Strength;
+    public float EndValue => PotionData.EndValue;
+    public float Duration => PotionData.Duration;
     
     public override void Use()
     {
@@ -15,6 +14,7 @@ public class Potion : GameItem
         {
             OnItemUsed();
             EventBus.Publish(new PotionAppliedEvent());
+            SaveQuantity();
         }
     }
 }

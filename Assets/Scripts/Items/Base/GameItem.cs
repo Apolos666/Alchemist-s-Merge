@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
-using UnityEngine.Serialization;
 
 public abstract class GameItem : MonoBehaviour
 {
-    [SerializeField] protected string _itemName;
-    [SerializeField] protected int _quantity;
-    public int Quantity => _quantity; 
-    [SerializeField] protected float _cooldownTime;
-
+    [SerializeField] protected GameItemData itemData;
+    public int Quantity { get; private set; }
+    
     private float _currentCooldownTime;
+
+    public string ItemName => itemData.ItemName;
+    public int Price => itemData.Price;
+    private string ItemId => itemData.ItemId;
 
     protected virtual void Update()
     {
@@ -16,15 +17,37 @@ public abstract class GameItem : MonoBehaviour
             _currentCooldownTime = Mathf.Max(0, _currentCooldownTime - Time.deltaTime);
     }
     
-    public float GetCooldownProgress() => _currentCooldownTime / _cooldownTime;
+    public float GetCooldownProgress() => _currentCooldownTime / itemData.CooldownTime;
 
-    protected virtual bool CanUse() => _currentCooldownTime <= 0 && _quantity > 0;
+    protected virtual bool CanUse() => _currentCooldownTime <= 0 && Quantity > 0;
     
     public abstract void Use();
 
     protected virtual void OnItemUsed()
     {
-        _quantity--;
-        _currentCooldownTime = _cooldownTime;
+        Quantity--;
+        _currentCooldownTime = itemData.CooldownTime;
+    }
+
+    public virtual void AddQuantity(int amount)
+    {
+        Quantity += amount;
+        SaveQuantity();
+    }
+
+    protected virtual void SaveQuantity()
+    {
+        PlayerPrefs.SetInt(ItemId + "_quantity", Quantity);
+        PlayerPrefs.Save();
+    }
+
+    protected virtual void LoadQuantity()
+    {
+        Quantity = PlayerPrefs.GetInt(ItemId + "_quantity", itemData.InitialQuantity);
+    }
+
+    protected virtual void Awake()
+    {
+        LoadQuantity();
     }
 }

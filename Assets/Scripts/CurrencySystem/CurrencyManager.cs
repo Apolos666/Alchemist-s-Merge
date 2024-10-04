@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class CurrencyManager : GenericSingleton<CurrencyManager>
+public class CurrencyManager : GenericPersistentSingleton<CurrencyManager>
 {
     private const string GOLD_KEY = "CurrentGold";
     public int CurrentGold { get; private set; }
@@ -31,8 +31,20 @@ public class CurrencyManager : GenericSingleton<CurrencyManager>
 
     private void LoadGold()
     {
-        var loadedGold = PlayerPrefs.GetInt(GOLD_KEY, 0);
-        CurrentGold = loadedGold;
+        // var loadedGold = PlayerPrefs.GetInt(GOLD_KEY, 0);
+        CurrentGold = 20000000;
         EventBus.Publish(new TotalGoldChangedEvent(CurrentGold));
+    }
+    
+    public bool TrySpendGold(int amount)
+    {
+        if (CurrentGold >= amount)
+        {
+            CurrentGold -= amount;
+            EventBus.Publish(new TotalGoldChangedEvent(CurrentGold));
+            SaveGold();
+            return true;
+        }
+        return false;
     }
 }

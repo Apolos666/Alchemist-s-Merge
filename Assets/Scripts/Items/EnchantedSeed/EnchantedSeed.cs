@@ -11,6 +11,7 @@ public class EnchantedSeed : GameItem
             OnItemUsed();
             PropSelector.Instance.ApplyEnchantedSeed(_enchantedProp);
             EventBus.Publish(new EnchantedSeedAppliedEvent(_enchantedProp));
+            SaveQuantity();
         }
     }
 }
