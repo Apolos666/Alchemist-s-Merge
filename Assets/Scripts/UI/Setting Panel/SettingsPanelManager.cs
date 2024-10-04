@@ -1,42 +1,60 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class SettingsPanelManager : MonoBehaviour
 {
     [SerializeField] private RectTransform _settingsPanel;
-    [SerializeField] private Button _settingsButton;
     [SerializeField] private Image _overlay;
+    [SerializeField] private Button _settingsButton;
 
-    [Header("Animation Settings")] [SerializeField]
-    private float _animationDuration = 0.5f;
-
+    [Header("Animation Settings")]
+    [SerializeField] private float _animationDuration = 0.5f;
     [SerializeField] private Ease showEase = Ease.OutBack;
     [SerializeField] private Ease hideEase = Ease.InBack;
     [SerializeField] private Vector2 hiddenPosition = new Vector2(300, 0);
     [SerializeField] private Vector2 shownPosition = Vector2.zero;
-    
-    [Header("Button Rotation Settings")]
+
+    [Header("Button Animation Settings")]
+    [SerializeField] private bool useButtonAnimation = false;
     [SerializeField] private float rotationDuration = 0.5f;
     [SerializeField] private float rotationAngle = 360f;
     [SerializeField] private Ease rotationEase = Ease.OutCirc;
 
+    [Header("Events")]
+    [SerializeField] private UnityEvent OnShowSettings;
+    [SerializeField] private UnityEvent OnHideSettings;
+
     private bool _isVisible = false;
     private GraphicRaycaster _raycaster;
     private EventSystem _eventSystem;
+    private ISettingsButtonAnimator _buttonAnimator;
 
     private void Start()
     {
         _settingsPanel.anchoredPosition = hiddenPosition;
         _settingsPanel.gameObject.SetActive(false);
 
-        _settingsButton.onClick.AddListener(ToggleSettings);
         _raycaster = GetComponent<GraphicRaycaster>();
         _eventSystem = EventSystem.current;
+
+        SetupButtonAnimator();
+    }
+
+    private void SetupButtonAnimator()
+    {
+        if (useButtonAnimation && _settingsButton != null)
+        {
+            _buttonAnimator = new RotatingButtonAnimator(_settingsButton.transform, rotationDuration, rotationAngle, rotationEase);
+        }
+        else
+        {
+            _buttonAnimator = new NoAnimationButtonAnimator();
+        }
     }
 
     private void Update()
@@ -50,42 +68,33 @@ public class SettingsPanelManager : MonoBehaviour
         }
     }
 
-    private void ToggleSettings()
+    public void ToggleSettings()
     {
+        Debug.Log("ToggleSettings");
         if (_isVisible)
             HideSettings();
         else
             ShowSettings();
-        
-        RotateSettingsButton();
+
+        _buttonAnimator.AnimateButtonClick();
     }
 
-    private void RotateSettingsButton()
-    {
-        _settingsButton.transform.DOKill();
-        
-        _settingsButton.transform.DORotate(new Vector3(0, 0, rotationAngle), rotationDuration, RotateMode.FastBeyond360)
-            .SetEase(rotationEase)
-            .SetRelative()
-            .OnComplete(() => _settingsButton.transform.DORotate(Vector3.zero, rotationDuration, RotateMode.FastBeyond360));
-    }
-
-    private void ShowSettings()
+    public void ShowSettings()
     {
         _isVisible = true;
-        _settingsButton.GetComponent<Button>().enabled = false;
         AnimatePanel(shownPosition, showEase);
         AnimateOverlay(true);
         UIManager.Instance.RegisterOverlay(true);
+        OnShowSettings.Invoke();
     }
 
-    private void HideSettings()
+    public void HideSettings()
     {
         _isVisible = false;
-        _settingsButton.GetComponent<Button>().enabled = true;
         AnimatePanel(hiddenPosition, hideEase);
         AnimateOverlay(false);
         UIManager.Instance.RegisterOverlay(false);
+        OnHideSettings.Invoke();
     }
     
     private void AnimateOverlay(bool show)
@@ -110,7 +119,6 @@ public class SettingsPanelManager : MonoBehaviour
     {
         _settingsPanel.DOKill();
 
-        // Animate the panel's position
         _settingsPanel.DOAnchorPos(targetPosition, _animationDuration)
             .SetEase(easeType)
             .OnStart(() => _settingsPanel.gameObject.SetActive(true))
@@ -120,7 +128,6 @@ public class SettingsPanelManager : MonoBehaviour
                     _settingsPanel.gameObject.SetActive(false);
             });
 
-        // Add a fade effect
         var canvasGroup = _settingsPanel.GetComponent<CanvasGroup>();
         
         if (canvasGroup == null)
@@ -128,7 +135,6 @@ public class SettingsPanelManager : MonoBehaviour
 
         canvasGroup.DOFade(_isVisible ? 1 : 0, _animationDuration);
 
-        // Add a scale effect
         _settingsPanel.DOScale(_isVisible ? Vector3.one : Vector3.one * 0.8f, _animationDuration)
             .SetEase(easeType);
     }
@@ -148,9 +154,10 @@ public class SettingsPanelManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        _settingsButton.onClick.RemoveListener(ToggleSettings);
-        
         _settingsPanel.DOKill();
-        _settingsButton.transform.DOKill();
+        if (_settingsButton != null)
+        {
+            _settingsButton.onClick.RemoveListener(ToggleSettings);
+        }
     }
 }
