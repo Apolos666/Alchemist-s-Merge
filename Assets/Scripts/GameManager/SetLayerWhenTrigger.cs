@@ -7,6 +7,7 @@ public class SetLayerWhenTrigger : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Default"))
         {
             other.gameObject.layer = LayerMask.NameToLayer("Item");
+            PropManager.Instance.RegisterProp(other.gameObject);
         }
     }
 }

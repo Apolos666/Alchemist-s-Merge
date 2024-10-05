@@ -16,7 +16,7 @@ public class ScoreUI : MonoBehaviour
 
     private void InitializeScores()
     {
-        AnimateTextTo(0, _scoreText);
+        AnimateTextTo(PlayerPrefs.GetInt("IsNewGame", 0) == 1 ? 0 : PlayerPrefs.GetInt(ScoreManager.CurrentScoreKey), _scoreText);
         AnimateTextTo(PlayerPrefs.GetInt(ScoreManager.HighScoreKey, 0), _highScoreText);
     }
 

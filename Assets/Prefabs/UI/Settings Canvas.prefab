@@ -1060,7 +1060,6 @@ GameObject:
   - component: {fileID: 407863751287542813}
   - component: {fileID: 407863751287542812}
   - component: {fileID: 407863751287542815}
-  - component: {fileID: 407863751287542818}
   m_Layer: 5
   m_Name: Home Button
   m_TagString: Untagged
@@ -1168,7 +1167,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 407863751287542818}
+      - m_Target: {fileID: 0}
         m_MethodName: LoadSceneWithTransition
         m_Mode: 5
         m_Arguments:
@@ -1179,20 +1178,6 @@ MonoBehaviour:
           m_StringArgument: Home
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &407863751287542818
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 407863751287542809}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35fa2e4508794baa931230b0d780f922, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fadeOverlay: {fileID: 0}
-  fadeDuration: 1
 --- !u!1 &407863751346977333
 GameObject:
   m_ObjectHideFlags: 0

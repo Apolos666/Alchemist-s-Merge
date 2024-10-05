@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PropBehavior : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class PropBehavior : MonoBehaviour
     [SerializeField] private float _spawnForce = 0.5f;
 
     private bool _isProcessing = false;
-
+    
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (_isProcessing) return;
@@ -55,6 +56,8 @@ public class PropBehavior : MonoBehaviour
         
         SpawnNextLevelProp(midPoint);
         
+        PropManager.Instance.UnregisterProp(otherProp);
+        PropManager.Instance.UnregisterProp(gameObject);
         Destroy(otherProp);
         Destroy(gameObject);
     }
@@ -65,6 +68,7 @@ public class PropBehavior : MonoBehaviour
         
         var newProp = Instantiate(_nextLevel.Prefab, spawnPosition, Quaternion.identity);
         newProp.layer = LayerMask.NameToLayer("Item");
+        PropManager.Instance.RegisterProp(newProp);
         
         // Thêm một lực nhỏ theo hướng ngẫu nhiên để tạo hiệu ứng "bật" ra
         var rb = newProp.GetComponent<Rigidbody2D>();

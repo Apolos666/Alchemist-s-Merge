@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 public class UIManager : GenericSingleton<UIManager>
 {
