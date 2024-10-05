@@ -17,6 +17,6 @@ MonoBehaviour:
   cooldownTime: 5
   itemId: gravitypotion
   _intialQuantity: 10
-  strength: 0.3
-  endValue: 0.8
-  duration: 0.8
+  strength: 5
+  endValue: 0.5
+  duration: 0.5

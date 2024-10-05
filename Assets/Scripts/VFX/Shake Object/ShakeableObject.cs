@@ -1,35 +1,25 @@
-﻿using DG.Tweening;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ShakeableObject : MonoBehaviour
 {
-    private Sequence _sequence;
+    private Rigidbody2D _rb;
 
     private void Start()
     {
+        _rb = GetComponent<Rigidbody2D>();
         EventBus.Subscribe<ShakeEvent>(OnShake);
     }
 
     private void OnDestroy()
     {
         EventBus.Unsubscribe<ShakeEvent>(OnShake);
-        if (_sequence != null && _sequence.IsActive())
-        {
-            _sequence.Kill();
-        }
     }
 
     private void OnShake(ShakeEvent message)
     {
-        if (_sequence != null && _sequence.IsActive())
-        {
-            _sequence.Kill();
-        }
-        
         if (gameObject.layer == LayerMask.NameToLayer("Default")) return;
-        
-        _sequence = transform
-            .DOJump(transform.position + Vector3.up * message.EndValue, message.Strength, 1, message.Duration)
-            .SetEase(Ease.OutQuad);
+
+        var force = Vector2.up * message.Strength;
+        _rb.AddForce(force, ForceMode2D.Impulse);
     }
 }
