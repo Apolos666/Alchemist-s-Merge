@@ -31,8 +31,8 @@ public class CurrencyManager : GenericPersistentSingleton<CurrencyManager>
 
     private void LoadGold()
     {
-        // var loadedGold = PlayerPrefs.GetInt(GOLD_KEY, 0);
-        CurrentGold = 20000000;
+        var loadedGold = PlayerPrefs.GetInt(GOLD_KEY, 0);
+        CurrentGold = loadedGold;
         EventBus.Publish(new TotalGoldChangedEvent(CurrentGold));
     }
     

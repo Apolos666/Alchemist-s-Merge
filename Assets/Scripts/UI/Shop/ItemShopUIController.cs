@@ -27,7 +27,7 @@ public class ItemShopUIController : MonoBehaviour
 
     private void TryBuyItem()
     {
-        if (ItemPurchaser.TryPurchaseItem(_item))
+        if (ItemPurchaser.Instance.TryPurchaseItem(_item))
         {
             UpdateUI();
         }

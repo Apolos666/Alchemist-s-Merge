@@ -5,6 +5,7 @@ public class PropBehavior : MonoBehaviour
 {
     [SerializeField] private Prop _prop;
     [SerializeField] private Prop _nextLevel;
+    public Prop NextLevel => _nextLevel;
     [SerializeField] private float _mergeDelay = 0.1f;
     [SerializeField] private float _spawnForce = 0.5f;
 

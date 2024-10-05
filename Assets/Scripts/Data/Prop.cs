@@ -11,5 +11,3 @@ public class Prop : ScriptableObject
     public float GoldChance;
     public int GoldAmount;
 }
-
-

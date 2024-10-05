@@ -20,8 +20,14 @@ public abstract class GameItem : MonoBehaviour
     public float GetCooldownProgress() => _currentCooldownTime / itemData.CooldownTime;
 
     protected virtual bool CanUse() => _currentCooldownTime <= 0 && Quantity > 0;
-    
-    public abstract void Use();
+
+    public virtual void Use()
+    {
+        if (Quantity <= 0)
+        {
+            ItemPurchaser.Instance.TryPurchaseItem(this);
+        }   
+    }
 
     protected virtual void OnItemUsed()
     {

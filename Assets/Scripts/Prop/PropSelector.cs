@@ -132,12 +132,12 @@ public class PropSelector : GenericSingleton<PropSelector>
         return (newProp, prop);
     }
 
-    public void ApplyEnchantedSeed(EnchantedProp enchantedProp)
+    public void ApplySpecialSeed(Prop specialProp)
     {
         if (_propQueue.Count > 0)
         {
             _propQueue.Dequeue();
-            _propQueue.Enqueue(enchantedProp);
+            _propQueue.Enqueue(specialProp);
             
             EventBus.Publish(new NextPropReadyEvent(_propQueue.Peek()));
         }

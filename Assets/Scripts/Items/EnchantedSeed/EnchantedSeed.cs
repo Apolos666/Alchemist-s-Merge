@@ -6,10 +6,11 @@ public class EnchantedSeed : GameItem
     
     public override void Use()
     {
+        base.Use();
         if (CanUse())
         {
             OnItemUsed();
-            PropSelector.Instance.ApplyEnchantedSeed(_enchantedProp);
+            PropSelector.Instance.ApplySpecialSeed(_enchantedProp);
             EventBus.Publish(new EnchantedSeedAppliedEvent(_enchantedProp));
             SaveQuantity();
         }

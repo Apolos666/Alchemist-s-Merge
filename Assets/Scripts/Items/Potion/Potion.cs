@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public class Potion : GameItem
+﻿public class Potion : GameItem
 {
     private PotionItemData PotionData => itemData as PotionItemData;
 
@@ -10,6 +8,7 @@ public class Potion : GameItem
     
     public override void Use()
     {
+        base.Use();
         if (CanUse())
         {
             OnItemUsed();

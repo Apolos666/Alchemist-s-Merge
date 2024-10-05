@@ -1,7 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UnityEngine;
 
-public class SpecialPropBehavior : MonoBehaviour
+public class EnchantedSeedBehavior : MonoBehaviour
 {
     [SerializeField] private GameObject _collisionVfx;
     [SerializeField] private float _checkRadius = 2f;
@@ -13,7 +14,8 @@ public class SpecialPropBehavior : MonoBehaviour
         {
             var collisionPoint = collision.GetContact(0).point;
             Instantiate(_collisionVfx, collisionPoint, Quaternion.identity);
-
+            SoundEffectManager.Instance.PlaySound("Enchanted Prop Collision", Vector3.zero);
+            
             Physics2D.CircleCastAll(collisionPoint, _checkRadius, Vector2.zero, 0f, _checkLayers)
                 .Select(hit => hit.collider.GetComponent<PropBehavior>())
                 .Where(prop => prop != null)
@@ -23,4 +25,4 @@ public class SpecialPropBehavior : MonoBehaviour
             Destroy(gameObject);
         }
     }
-}   
+}
