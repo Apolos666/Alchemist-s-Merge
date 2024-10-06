@@ -6,7 +6,7 @@ using UnityEngine;
 public class SaveSystem : GenericPersistentSingleton<SaveSystem>
 {
     private string _savePath;
-    private const string PrefabPath = "Assets/Prefabs/Props/";
+    private const string PrefabPath = "Props/";
 
     protected override void Awake()
     {
@@ -53,8 +53,8 @@ public class SaveSystem : GenericPersistentSingleton<SaveSystem>
 
         foreach (var data in saveData.PropDatas)
         {
-            var fullPrefabPath = Path.Combine(PrefabPath, data.PropName + ".prefab");
-            var propPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(fullPrefabPath);
+            var prefabPath = Path.Combine(PrefabPath, data.PropName);
+            var propPrefab = Resources.Load<GameObject>(prefabPath);
             
             if (propPrefab != null)
             {
@@ -64,7 +64,7 @@ public class SaveSystem : GenericPersistentSingleton<SaveSystem>
             }
             else
             {
-                Debug.LogWarning("Prefab not found: " + fullPrefabPath);
+                Debug.LogWarning("Prefab not found: " + prefabPath);
             }
         }
     }
