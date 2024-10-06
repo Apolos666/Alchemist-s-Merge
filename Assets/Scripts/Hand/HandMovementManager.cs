@@ -9,13 +9,16 @@ public class HandMovementManager : MonoBehaviour
     [SerializeField] private LayerMask _movementLayer;
     [SerializeField] private float _scaleDuration = 0.5f;
     [SerializeField] private float _movementSpeed = 10f;
+    [SerializeField] private float _dropThreshold = 0.1f; // Threshold to determine if we've reached the target position
 
     private Camera _mainCamera;
-    private GameObject _heldPropObject; // The currently held prop object
-    private Prop _heldProp; // The currently held prop
+    private GameObject _heldPropObject;
+    private Prop _heldProp;
     private bool _isHolding;
     private bool _canDrop = true;
     private bool _isInteractionAllowed = true;
+    private bool _isMoving = false;
+    private Vector3 _targetPosition;
 
     private void Start()
     {
@@ -41,6 +44,15 @@ public class HandMovementManager : MonoBehaviour
         if (TryGetInput(out var inputPosition, out var isInputEnded))
         {
             HandleMovement(inputPosition, isInputEnded);
+        }
+
+        if (_isMoving && Vector3.Distance(_objectToMove.transform.position, _targetPosition) < _dropThreshold)
+        {
+            _isMoving = false;
+            if (_isHolding && _canDrop)
+            {
+                DropProp();
+            }
         }
     }
 
@@ -68,15 +80,14 @@ public class HandMovementManager : MonoBehaviour
 
     private void HandleMovement(Vector2 inputPosition, bool isInputEnded)
     {
-        var worldPosition =
-            _mainCamera.ScreenToWorldPoint(new Vector3(inputPosition.x, inputPosition.y, _mainCamera.nearClipPlane));
-        ;
+        var worldPosition = _mainCamera.ScreenToWorldPoint(new Vector3(inputPosition.x, inputPosition.y, _mainCamera.nearClipPlane));
         if (IsInMovementArea(worldPosition))
         {
             MoveObjectTo(worldPosition);
-            if (isInputEnded && _isHolding && _canDrop)
+            if (isInputEnded)
             {
-                DropProp();
+                _targetPosition = new Vector3(worldPosition.x, _objectToMove.transform.position.y, _objectToMove.transform.position.z);
+                _isMoving = true;
             }
         }
     }
@@ -89,8 +100,7 @@ public class HandMovementManager : MonoBehaviour
 
     private void MoveObjectTo(Vector3 worldPosition)
     {
-        var targetPosition = new Vector3(worldPosition.x, _objectToMove.transform.position.y,
-            _objectToMove.transform.position.z);
+        var targetPosition = new Vector3(worldPosition.x, _objectToMove.transform.position.y, _objectToMove.transform.position.z);
         var distance = Vector3.Distance(_objectToMove.transform.position, targetPosition);
         var duration = distance / _movementSpeed;
 
